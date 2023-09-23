@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/models/device.model.dart';
 
@@ -90,7 +91,7 @@ class DeviceCard extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 4, horizontal: 8)),
                           onPressed: () {
-                            //TODO: Redirect to DeviceDetailsPage
+                            context.push('/devices/${device.id}');
                           },
                           child: const Text(
                             'View Details',
