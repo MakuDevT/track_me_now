@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_app/data/mocks/device.mock.dart';
+import 'package:track_me_now/data/mocks/device.mock.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _MapsScreenState extends State<MapsScreen> {
   @override
   void initState() {
     //TODO: Perform API fetch/Get devices from state manager
-    
+
     _markers = mockDevices
         .map(
           (device) => Marker(
@@ -30,8 +30,9 @@ class _MapsScreenState extends State<MapsScreen> {
                       BitmapDescriptor.hueYellow)
                   : BitmapDescriptor.defaultMarker,
               markerId: MarkerId(device.id),
-              position: LatLng(device.lat, device.lng),
-              infoWindow: InfoWindow(title: device.name),
+              position: LatLng(
+                  device.trackHistory[0].lat, device.trackHistory[0].lng),
+              infoWindow: InfoWindow(title: device.model),
               alpha: widget.deviceId != null && device.id != widget.deviceId
                   ? 0.6
                   : 1),

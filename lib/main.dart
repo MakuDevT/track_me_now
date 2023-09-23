@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/main.page.dart';
+import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
