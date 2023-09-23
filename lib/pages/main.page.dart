@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
+import 'package:track_me_now/features/onboarding/onboarding.screen.dart';
+import 'package:track_me_now/features/payment/payment-blocker.screen.dart';
 import 'package:track_me_now/features/profile/profile-view.screen.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,6 +20,8 @@ class _MainPageState extends State<MainPage> {
   ];
 
   int _selectedIndex = 0;
+  bool showBackdrop = true;
+  bool isPaymentNEeded = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -25,36 +29,54 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  void closeOnboarding() {
+    setState(() {
+      showBackdrop = false;
+    });
+  }
+
+  @override
+  void initState() {
+    //TODO: Perform Trial, Payment, Devices and User fetching in this section
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text('Track Me Now'),
-          elevation: 2,
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).primaryColor),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue[900],
-        unselectedItemColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.devices),
-            label: 'Devices',
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+              title: const Text('Track Me Now'),
+              elevation: 2,
+              foregroundColor: Colors.white,
+              backgroundColor: Theme.of(context).primaryColor),
+          body: _widgetOptions.elementAt(_selectedIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.blue[900],
+            unselectedItemColor: Colors.white,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.devices),
+                label: 'Devices',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.map),
+                label: 'Map',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle),
+                label: 'Account',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Map',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+        ),
+        if (showBackdrop) OnboardingScreen(onClose: closeOnboarding),
+        if (isPaymentNEeded) const PaymentBlockerScreen(),
+      ],
     );
   }
 }
