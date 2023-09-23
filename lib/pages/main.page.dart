@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/features/device/device-list.screen.dart';
-import 'package:flutter_app/features/map/map.screen.dart';
-import 'package:flutter_app/features/profile/profile-view.screen.dart';
+import 'package:track_me_now/features/device/device-list.screen.dart';
+import 'package:track_me_now/features/map/map.screen.dart';
+import 'package:track_me_now/features/profile/profile-view.screen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
