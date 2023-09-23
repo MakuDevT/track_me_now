@@ -29,12 +29,14 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 2,
           title: const Text('Track Me Now'),
+          elevation: 2,
           foregroundColor: Colors.white,
           backgroundColor: Theme.of(context).primaryColor),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue[900],
+        unselectedItemColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.devices),

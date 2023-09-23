@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +8,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const MainPage(),
+    ),
+    GoRoute(
+      path: '/devices/:deviceId',
+      builder: (context, state) =>
+          DeviceDetailsPage(deviceId: state.pathParameters['deviceId']),
     ),
   ],
 );
