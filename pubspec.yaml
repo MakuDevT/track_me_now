@@ -39,6 +39,9 @@ dependencies:
   google_maps_flutter: ^2.5.0
   dio: ^5.3.2
   intl: ^0.18.1
+  flutter_riverpod: ^2.4.0
+  device_info_plus: ^9.0.3
+  jiffy: ^6.2.1
 
 dev_dependencies:
   flutter_test:

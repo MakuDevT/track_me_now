@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:track_me_now/data/mocks/device.mock.dart';
+import 'package:track_me_now/data/models/user.model.dart';
+import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/user.provider.dart';
+import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
@@ -14,37 +20,41 @@ final _router = GoRouter(
       builder: (context, state) =>
           DeviceDetailsPage(deviceId: state.pathParameters['deviceId']),
     ),
+    GoRoute(
+      path: '/chat/:roomId',
+      builder: (context, state) => ChatPage(
+          roomId: state.pathParameters['roomId'],
+          deviceId: state.uri.queryParameters['deviceId']),
+    ),
   ],
 );
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends ConsumerState<MyApp> {
+  // @override
+  // void initState() {
+  //   //TODO: Read information via device_info_plus
+  //   ref.read(deviceProvider.notifier).setCurrentDevice(mockDevices[0]);
+  //   ref.read(userProvider.notifier).initialize(
+  //       User(email: 'test@gmail.com', name: 'Rick Sanchez', userId: '1'));
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Track Me Now',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),

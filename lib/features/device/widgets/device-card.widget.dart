@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
+import 'package:track_me_now/data/mocks/chat.mock.dart';
 import 'package:track_me_now/data/models/device.model.dart';
+import 'package:track_me_now/data/providers/chat.provider.dart';
+import 'package:track_me_now/data/providers/device.provider.dart';
 
-class DeviceCard extends StatelessWidget {
+class DeviceCard extends ConsumerWidget {
   final Device device;
 
   const DeviceCard({super.key, required this.device});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    Device? myDevice = ref.watch(deviceProvider).currentDevice;
+
     return Card(
       elevation: 4,
       color: Colors.amber[800],
@@ -97,15 +103,21 @@ class DeviceCard extends StatelessWidget {
                             'View Details',
                           )),
                       const SizedBox(width: 4),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size.zero,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 8)),
-                          onPressed: () {
-                            //TODO: Redirect to ChatPage
-                          },
-                          child: const Text('Message'))
+                      if (myDevice?.deviceId != device.deviceId)
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8)),
+                            onPressed: () async {
+                              //TODO: Call API related to rooms and message fetching
+                              ref
+                                  .read(chatProvider.notifier)
+                                  .setChat(mockChats);
+                              context
+                                  .push('/chat/X?deviceId=${device.deviceId}');
+                            },
+                            child: const Text('Message'))
                     ],
                   )
                 ],
