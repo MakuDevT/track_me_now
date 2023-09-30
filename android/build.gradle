@@ -1,5 +1,12 @@
 buildscript {
     ext.kotlin_version = '1.7.10'
+    ext {
+       compileSdkVersion   = 33                // or higher
+       targetSdkVersion    = 33                // or higher
+       minSdkVersion       = 20
+       appCompatVersion    = "1.4.2"           // or higher
+       playServicesLocationVersion = "20.0.0"  // or higher
+    }
     repositories {
         google()
         mavenCentral()
@@ -15,6 +22,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // [required] flutter_background_geolocation
+        maven { url "${project(':flutter_background_geolocation').projectDir}/libs" }
+        maven { url 'https://developer.huawei.com/repo/' }
+        // [required] background_fetch
+        maven { url "${project(':background_fetch').projectDir}/libs" }
     }
 }
 
