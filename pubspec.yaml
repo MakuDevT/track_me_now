@@ -42,6 +42,7 @@ dependencies:
   flutter_riverpod: ^2.4.0
   device_info_plus: ^9.0.3
   jiffy: ^6.2.1
+  flutter_background_geolocation: ^4.13.0
 
 dev_dependencies:
   flutter_test:
