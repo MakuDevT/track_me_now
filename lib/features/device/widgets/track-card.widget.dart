@@ -21,9 +21,15 @@ class TrackCard extends StatelessWidget {
           elevation: isActive ? 2 : 1,
           color: isActive ? Colors.amber[600] : Theme.of(context).cardColor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            child: Text(
-                '${DateTimeUtil.formatDateTime(track.createdAt)} @ ${track.lat.abs()}°${track.lat > 0 ? 'N' : track.lat < 0 ? 'S' : ''} ${track.lng.abs()}°${track.lat > 0 ? 'E' : track.lat < 0 ? 'W' : ''}'),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(DateTimeUtil.formatDateTime(track.dateCreated)),
+                Text(
+                    '${track.lat.abs()}°${track.lat > 0 ? 'N' : track.lat < 0 ? 'S' : ''} ${track.lng.abs()}°${track.lat > 0 ? 'E' : track.lat < 0 ? 'W' : ''}'),
+              ],
+            ),
           )),
     );
   }

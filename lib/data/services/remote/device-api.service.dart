@@ -30,7 +30,7 @@ class DeviceApiService extends BaseApiService {
   Future<Device> getUserDevice(String deviceId) async {
     try {
       final response = await dio.get(
-        '/device/connected?id=$deviceId',
+        '/device?id=$deviceId',
       );
 
       return Device.fromJson(response.data['data']);
@@ -41,11 +41,11 @@ class DeviceApiService extends BaseApiService {
     }
   }
 
-  Future<Device> creteUserDevice(String macAddress) async {
+  Future<Device> creteUserDevice(String macAddress, String model) async {
     try {
       final response = await dio.post(
         '/device/create',
-        data: {"macAddress": macAddress},
+        data: {"macAddress": macAddress, "model": model},
       );
 
       return Device.fromJson(response.data['data']);

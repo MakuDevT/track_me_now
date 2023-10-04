@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/models/chat/chat.model.dart';
 import 'package:track_me_now/data/models/device/device.model.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 
 class ChatItem extends ConsumerStatefulWidget {
   final Chat chatItem;
@@ -20,7 +20,7 @@ class ChatItemState extends ConsumerState<ChatItem> {
 
   @override
   Widget build(BuildContext context) {
-    Device? device = ref.watch(deviceProvider).currentDevice;
+    Device? device = ref.watch(deviceListProvider).currentDevice;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(

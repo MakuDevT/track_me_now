@@ -6,11 +6,22 @@ part 'track.model.g.dart';
 
 @freezed
 class Track with _$Track {
+  const Track._();
+
   const factory Track({
-    required double lat,
-    required double lng,
-    required DateTime createdAt,
+    required String id,
+    required String latitude,
+    required String longitude,
+    required DateTime dateCreated,
   }) = _Track;
+
+  double get lat {
+    return double.parse(latitude);
+  }
+
+  double get lng {
+    return double.parse(longitude);
+  }
 
   factory Track.fromJson(Map<String, Object?> json) => _$TrackFromJson(json);
 }

@@ -20,9 +20,10 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Track {
-  double get lat => throw _privateConstructorUsedError;
-  double get lng => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
+  DateTime get dateCreated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,8 @@ abstract class $TrackCopyWith<$Res> {
   factory $TrackCopyWith(Track value, $Res Function(Track) then) =
       _$TrackCopyWithImpl<$Res, Track>;
   @useResult
-  $Res call({double lat, double lng, DateTime createdAt});
+  $Res call(
+      {String id, String latitude, String longitude, DateTime dateCreated});
 }
 
 /// @nodoc
@@ -50,22 +52,27 @@ class _$TrackCopyWithImpl<$Res, $Val extends Track>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lat = null,
-    Object? lng = null,
-    Object? createdAt = null,
+    Object? id = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? dateCreated = null,
   }) {
     return _then(_value.copyWith(
-      lat: null == lat
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      lng: null == lng
-          ? _value.lng
-          : lng // ignore: cast_nullable_to_non_nullable
-              as double,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateCreated: null == dateCreated
+          ? _value.dateCreated
+          : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
   }
@@ -78,7 +85,8 @@ abstract class _$$TrackImplCopyWith<$Res> implements $TrackCopyWith<$Res> {
       __$$TrackImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double lat, double lng, DateTime createdAt});
+  $Res call(
+      {String id, String latitude, String longitude, DateTime dateCreated});
 }
 
 /// @nodoc
@@ -92,22 +100,27 @@ class __$$TrackImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lat = null,
-    Object? lng = null,
-    Object? createdAt = null,
+    Object? id = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? dateCreated = null,
   }) {
     return _then(_$TrackImpl(
-      lat: null == lat
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      lng: null == lng
-          ? _value.lng
-          : lng // ignore: cast_nullable_to_non_nullable
-              as double,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateCreated: null == dateCreated
+          ? _value.dateCreated
+          : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -115,23 +128,29 @@ class __$$TrackImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TrackImpl with DiagnosticableTreeMixin implements _Track {
+class _$TrackImpl extends _Track with DiagnosticableTreeMixin {
   const _$TrackImpl(
-      {required this.lat, required this.lng, required this.createdAt});
+      {required this.id,
+      required this.latitude,
+      required this.longitude,
+      required this.dateCreated})
+      : super._();
 
   factory _$TrackImpl.fromJson(Map<String, dynamic> json) =>
       _$$TrackImplFromJson(json);
 
   @override
-  final double lat;
+  final String id;
   @override
-  final double lng;
+  final String latitude;
   @override
-  final DateTime createdAt;
+  final String longitude;
+  @override
+  final DateTime dateCreated;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Track(lat: $lat, lng: $lng, createdAt: $createdAt)';
+    return 'Track(id: $id, latitude: $latitude, longitude: $longitude, dateCreated: $dateCreated)';
   }
 
   @override
@@ -139,9 +158,10 @@ class _$TrackImpl with DiagnosticableTreeMixin implements _Track {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Track'))
-      ..add(DiagnosticsProperty('lat', lat))
-      ..add(DiagnosticsProperty('lng', lng))
-      ..add(DiagnosticsProperty('createdAt', createdAt));
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('latitude', latitude))
+      ..add(DiagnosticsProperty('longitude', longitude))
+      ..add(DiagnosticsProperty('dateCreated', dateCreated));
   }
 
   @override
@@ -149,15 +169,19 @@ class _$TrackImpl with DiagnosticableTreeMixin implements _Track {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TrackImpl &&
-            (identical(other.lat, lat) || other.lat == lat) &&
-            (identical(other.lng, lng) || other.lng == lng) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.dateCreated, dateCreated) ||
+                other.dateCreated == dateCreated));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, lat, lng, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, latitude, longitude, dateCreated);
 
   @JsonKey(ignore: true)
   @override
@@ -173,20 +197,24 @@ class _$TrackImpl with DiagnosticableTreeMixin implements _Track {
   }
 }
 
-abstract class _Track implements Track {
+abstract class _Track extends Track {
   const factory _Track(
-      {required final double lat,
-      required final double lng,
-      required final DateTime createdAt}) = _$TrackImpl;
+      {required final String id,
+      required final String latitude,
+      required final String longitude,
+      required final DateTime dateCreated}) = _$TrackImpl;
+  const _Track._() : super._();
 
   factory _Track.fromJson(Map<String, dynamic> json) = _$TrackImpl.fromJson;
 
   @override
-  double get lat;
+  String get id;
   @override
-  double get lng;
+  String get latitude;
   @override
-  DateTime get createdAt;
+  String get longitude;
+  @override
+  DateTime get dateCreated;
   @override
   @JsonKey(ignore: true)
   _$$TrackImplCopyWith<_$TrackImpl> get copyWith =>

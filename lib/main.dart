@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/global.util.dart';
-import 'package:track_me_now/data/mocks/device.mock.dart';
 import 'package:track_me_now/data/models/user/user.model.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
 import 'package:track_me_now/data/providers/user.provider.dart';
-import 'package:track_me_now/data/services/remote/device-api.service.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';

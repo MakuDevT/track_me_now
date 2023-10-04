@@ -22,10 +22,10 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
 mixin _$Device {
   String get id =>
       throw _privateConstructorUsedError; // required String deviceId,
-// required String model,
+  String get model => throw _privateConstructorUsedError;
   String get macAddress => throw _privateConstructorUsedError;
   DateTime get dateCreated => throw _privateConstructorUsedError;
-  List<Track>? get trackHistory => throw _privateConstructorUsedError;
+  List<Track>? get tracks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,9 +39,10 @@ abstract class $DeviceCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String model,
       String macAddress,
       DateTime dateCreated,
-      List<Track>? trackHistory});
+      List<Track>? tracks});
 }
 
 /// @nodoc
@@ -58,14 +59,19 @@ class _$DeviceCopyWithImpl<$Res, $Val extends Device>
   @override
   $Res call({
     Object? id = null,
+    Object? model = null,
     Object? macAddress = null,
     Object? dateCreated = null,
-    Object? trackHistory = freezed,
+    Object? tracks = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      model: null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
               as String,
       macAddress: null == macAddress
           ? _value.macAddress
@@ -75,9 +81,9 @@ class _$DeviceCopyWithImpl<$Res, $Val extends Device>
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      trackHistory: freezed == trackHistory
-          ? _value.trackHistory
-          : trackHistory // ignore: cast_nullable_to_non_nullable
+      tracks: freezed == tracks
+          ? _value.tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
               as List<Track>?,
     ) as $Val);
   }
@@ -92,9 +98,10 @@ abstract class _$$DeviceImplCopyWith<$Res> implements $DeviceCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String model,
       String macAddress,
       DateTime dateCreated,
-      List<Track>? trackHistory});
+      List<Track>? tracks});
 }
 
 /// @nodoc
@@ -109,14 +116,19 @@ class __$$DeviceImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? model = null,
     Object? macAddress = null,
     Object? dateCreated = null,
-    Object? trackHistory = freezed,
+    Object? tracks = freezed,
   }) {
     return _then(_$DeviceImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      model: null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
               as String,
       macAddress: null == macAddress
           ? _value.macAddress
@@ -126,9 +138,9 @@ class __$$DeviceImplCopyWithImpl<$Res>
           ? _value.dateCreated
           : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      trackHistory: freezed == trackHistory
-          ? _value._trackHistory
-          : trackHistory // ignore: cast_nullable_to_non_nullable
+      tracks: freezed == tracks
+          ? _value._tracks
+          : tracks // ignore: cast_nullable_to_non_nullable
               as List<Track>?,
     ));
   }
@@ -139,10 +151,11 @@ class __$$DeviceImplCopyWithImpl<$Res>
 class _$DeviceImpl with DiagnosticableTreeMixin implements _Device {
   const _$DeviceImpl(
       {required this.id,
+      required this.model,
       required this.macAddress,
       required this.dateCreated,
-      final List<Track>? trackHistory})
-      : _trackHistory = trackHistory;
+      final List<Track>? tracks})
+      : _tracks = tracks;
 
   factory _$DeviceImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeviceImplFromJson(json);
@@ -150,24 +163,25 @@ class _$DeviceImpl with DiagnosticableTreeMixin implements _Device {
   @override
   final String id;
 // required String deviceId,
-// required String model,
+  @override
+  final String model;
   @override
   final String macAddress;
   @override
   final DateTime dateCreated;
-  final List<Track>? _trackHistory;
+  final List<Track>? _tracks;
   @override
-  List<Track>? get trackHistory {
-    final value = _trackHistory;
+  List<Track>? get tracks {
+    final value = _tracks;
     if (value == null) return null;
-    if (_trackHistory is EqualUnmodifiableListView) return _trackHistory;
+    if (_tracks is EqualUnmodifiableListView) return _tracks;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Device(id: $id, macAddress: $macAddress, dateCreated: $dateCreated, trackHistory: $trackHistory)';
+    return 'Device(id: $id, model: $model, macAddress: $macAddress, dateCreated: $dateCreated, tracks: $tracks)';
   }
 
   @override
@@ -176,9 +190,10 @@ class _$DeviceImpl with DiagnosticableTreeMixin implements _Device {
     properties
       ..add(DiagnosticsProperty('type', 'Device'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('model', model))
       ..add(DiagnosticsProperty('macAddress', macAddress))
       ..add(DiagnosticsProperty('dateCreated', dateCreated))
-      ..add(DiagnosticsProperty('trackHistory', trackHistory));
+      ..add(DiagnosticsProperty('tracks', tracks));
   }
 
   @override
@@ -187,18 +202,18 @@ class _$DeviceImpl with DiagnosticableTreeMixin implements _Device {
         (other.runtimeType == runtimeType &&
             other is _$DeviceImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.model, model) || other.model == model) &&
             (identical(other.macAddress, macAddress) ||
                 other.macAddress == macAddress) &&
             (identical(other.dateCreated, dateCreated) ||
                 other.dateCreated == dateCreated) &&
-            const DeepCollectionEquality()
-                .equals(other._trackHistory, _trackHistory));
+            const DeepCollectionEquality().equals(other._tracks, _tracks));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, macAddress, dateCreated,
-      const DeepCollectionEquality().hash(_trackHistory));
+  int get hashCode => Object.hash(runtimeType, id, model, macAddress,
+      dateCreated, const DeepCollectionEquality().hash(_tracks));
 
   @JsonKey(ignore: true)
   @override
@@ -217,21 +232,23 @@ class _$DeviceImpl with DiagnosticableTreeMixin implements _Device {
 abstract class _Device implements Device {
   const factory _Device(
       {required final String id,
+      required final String model,
       required final String macAddress,
       required final DateTime dateCreated,
-      final List<Track>? trackHistory}) = _$DeviceImpl;
+      final List<Track>? tracks}) = _$DeviceImpl;
 
   factory _Device.fromJson(Map<String, dynamic> json) = _$DeviceImpl.fromJson;
 
   @override
   String get id;
   @override // required String deviceId,
-// required String model,
+  String get model;
+  @override
   String get macAddress;
   @override
   DateTime get dateCreated;
   @override
-  List<Track>? get trackHistory;
+  List<Track>? get tracks;
   @override
   @JsonKey(ignore: true)
   _$$DeviceImplCopyWith<_$DeviceImpl> get copyWith =>

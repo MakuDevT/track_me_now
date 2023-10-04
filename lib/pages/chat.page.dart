@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/widgets/feedback/custom-error.widget.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/features/chat/chat.screen.dart';
 
 class ChatPage extends ConsumerWidget {
@@ -13,7 +13,7 @@ class ChatPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final device = ref
-        .watch(deviceProvider)
+        .watch(deviceListProvider)
         .devices
         .firstWhere((device) => device.id == deviceId);
 

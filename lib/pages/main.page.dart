@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/services/remote/device-api.service.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
@@ -53,7 +53,7 @@ class MainPageState extends ConsumerState<MainPage> {
               actions: [
                 IconButton(
                     onPressed: () {
-                      ref.read(deviceProvider.notifier).refetch();
+                      ref.read(deviceListProvider.notifier).refetch();
                     },
                     icon: const Icon(Icons.refresh))
               ],

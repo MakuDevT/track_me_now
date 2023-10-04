@@ -6,12 +6,12 @@ part 'device-state.model.freezed.dart';
 part 'device-state.model.g.dart';
 
 @freezed
-class DeviceNotifierState with _$DeviceNotifierState {
-  const factory DeviceNotifierState({
+class DeviceListNotifierState with _$DeviceListNotifierState {
+  const factory DeviceListNotifierState({
     Device? currentDevice,
     required List<Device> devices,
   }) = _DeviceNotifierState;
 
-  factory DeviceNotifierState.fromJson(Map<String, Object?> json) =>
-      _$DeviceNotifierStateFromJson(json);
+  factory DeviceListNotifierState.fromJson(Map<String, Object?> json) =>
+      _$DeviceListNotifierStateFromJson(json);
 }
