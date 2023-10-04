@@ -19,7 +19,8 @@ class ChatPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text("${device.deviceId} (${device.model})"),
+          // title: Text("${device.deviceId} (${device.model})"),
+          title: Text("Device ${device.id}"),
           elevation: 2,
           foregroundColor: Colors.white,
           backgroundColor: Theme.of(context).primaryColor),

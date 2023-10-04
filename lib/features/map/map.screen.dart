@@ -23,6 +23,7 @@ class _MapsScreenState extends State<MapsScreen> {
     //TODO: Perform API fetch/Get devices from state manager
 
     _markers = mockDevices
+        .where((device) => device.trackHistory != null)
         .map(
           (device) => Marker(
               icon: widget.deviceId != null && device.id != widget.deviceId
@@ -31,8 +32,8 @@ class _MapsScreenState extends State<MapsScreen> {
                   : BitmapDescriptor.defaultMarker,
               markerId: MarkerId(device.id),
               position: LatLng(
-                  device.trackHistory[0].lat, device.trackHistory[0].lng),
-              infoWindow: InfoWindow(title: device.model),
+                  device.trackHistory![0].lat, device.trackHistory![0].lng),
+              infoWindow: InfoWindow(title: device.id),
               alpha: widget.deviceId != null && device.id != widget.deviceId
                   ? 0.6
                   : 1),

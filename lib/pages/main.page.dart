@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/services/remote/device-api.service.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
 import 'package:track_me_now/features/onboarding/onboarding.screen.dart';
 import 'package:track_me_now/features/payment/payment-blocker.screen.dart';
 import 'package:track_me_now/features/profile/profile-view.screen.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  MainPageState createState() => MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class MainPageState extends ConsumerState<MainPage> {
   static const List<Widget> _widgetOptions = <Widget>[
     DeviceListScreen(),
     MapsScreen(),
@@ -20,7 +23,7 @@ class _MainPageState extends State<MainPage> {
   ];
 
   int _selectedIndex = 0;
-  bool showBackdrop = true;
+  bool showBackdrop = false;
   bool isPaymentNEeded = false;
 
   void _onItemTapped(int index) {
@@ -47,6 +50,13 @@ class _MainPageState extends State<MainPage> {
       children: [
         Scaffold(
           appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      ref.read(deviceProvider.notifier).refetch();
+                    },
+                    icon: const Icon(Icons.refresh))
+              ],
               title: const Text('Track Me Now'),
               elevation: 2,
               foregroundColor: Colors.white,

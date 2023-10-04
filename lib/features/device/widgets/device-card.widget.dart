@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/mocks/chat.mock.dart';
-import 'package:track_me_now/data/models/device.model.dart';
+import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/chat.provider.dart';
 import 'package:track_me_now/data/providers/device.provider.dart';
 
@@ -66,29 +66,31 @@ class DeviceCard extends ConsumerWidget {
                             color: Colors.blue[900]),
                         children: [
                           TextSpan(
-                              text: device.model,
+                              text: device.id,
                               style: const TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white))
                         ]),
                   ),
-                  RichText(
-                    text: TextSpan(
-                        text: "Last Date Tracked: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue[900]),
-                        children: [
-                          TextSpan(
-                              text: DateTimeUtil.formatDateTime(
-                                  device.trackHistory[0].createdAt),
-                              style: const TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white))
-                        ]),
-                  ),
+                  if (device.trackHistory != null &&
+                      device.trackHistory!.isNotEmpty)
+                    RichText(
+                      text: TextSpan(
+                          text: "Last Date Tracked: ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue[900]),
+                          children: [
+                            TextSpan(
+                                text: DateTimeUtil.formatDateTime(
+                                    device.trackHistory![0].createdAt),
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white))
+                          ]),
+                    ),
                   Row(
                     children: [
                       ElevatedButton(
@@ -103,7 +105,7 @@ class DeviceCard extends ConsumerWidget {
                             'View Details',
                           )),
                       const SizedBox(width: 4),
-                      if (myDevice?.deviceId != device.deviceId)
+                      if (myDevice?.id != device.id)
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size.zero,
@@ -114,8 +116,7 @@ class DeviceCard extends ConsumerWidget {
                               ref
                                   .read(chatProvider.notifier)
                                   .setChat(mockChats);
-                              context
-                                  .push('/chat/X?deviceId=${device.deviceId}');
+                              context.push('/chat/X?deviceId=${device.id}');
                             },
                             child: const Text('Message'))
                     ],

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/data/models/user.model.dart';
+import 'package:track_me_now/data/models/user/user.model.dart';
 
 class UserNotifier extends StateNotifier<User?> {
   UserNotifier()

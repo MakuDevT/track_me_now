@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/data/models/chat.model.dart';
+import 'package:track_me_now/data/models/chat/chat.model.dart';
 
 class ChatNotifier extends StateNotifier<List<Chat>> {
   ChatNotifier() : super([]);

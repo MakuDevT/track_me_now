@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
-import 'package:track_me_now/data/models/chat.model.dart';
-import 'package:track_me_now/data/models/device.model.dart';
+import 'package:track_me_now/data/models/chat/chat.model.dart';
+import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/device.provider.dart';
 
 class ChatItem extends ConsumerStatefulWidget {
@@ -24,9 +24,9 @@ class ChatItemState extends ConsumerState<ChatItem> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
-          device?.deviceId == widget.chatItem.senderId ? paddingSize : 0,
+          device?.id == widget.chatItem.senderId ? paddingSize : 0,
           4,
-          device?.deviceId == widget.chatItem.senderId ? 0 : paddingSize,
+          device?.id == widget.chatItem.senderId ? 0 : paddingSize,
           4),
       child: GestureDetector(
         onLongPress: () {
@@ -35,7 +35,7 @@ class ChatItemState extends ConsumerState<ChatItem> {
           });
         },
         child: Card(
-          color: device?.deviceId == widget.chatItem.senderId
+          color: device?.id == widget.chatItem.senderId
               ? Colors.blue[100]
               : Colors.blue[300],
           child: Padding(
