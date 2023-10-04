@@ -14,26 +14,27 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-DeviceNotifierState _$DeviceNotifierStateFromJson(Map<String, dynamic> json) {
+DeviceListNotifierState _$DeviceListNotifierStateFromJson(
+    Map<String, dynamic> json) {
   return _DeviceNotifierState.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DeviceNotifierState {
+mixin _$DeviceListNotifierState {
   Device? get currentDevice => throw _privateConstructorUsedError;
   List<Device> get devices => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DeviceNotifierStateCopyWith<DeviceNotifierState> get copyWith =>
+  $DeviceListNotifierStateCopyWith<DeviceListNotifierState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DeviceNotifierStateCopyWith<$Res> {
-  factory $DeviceNotifierStateCopyWith(
-          DeviceNotifierState value, $Res Function(DeviceNotifierState) then) =
-      _$DeviceNotifierStateCopyWithImpl<$Res, DeviceNotifierState>;
+abstract class $DeviceListNotifierStateCopyWith<$Res> {
+  factory $DeviceListNotifierStateCopyWith(DeviceListNotifierState value,
+          $Res Function(DeviceListNotifierState) then) =
+      _$DeviceListNotifierStateCopyWithImpl<$Res, DeviceListNotifierState>;
   @useResult
   $Res call({Device? currentDevice, List<Device> devices});
 
@@ -41,9 +42,10 @@ abstract class $DeviceNotifierStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DeviceNotifierStateCopyWithImpl<$Res, $Val extends DeviceNotifierState>
-    implements $DeviceNotifierStateCopyWith<$Res> {
-  _$DeviceNotifierStateCopyWithImpl(this._value, this._then);
+class _$DeviceListNotifierStateCopyWithImpl<$Res,
+        $Val extends DeviceListNotifierState>
+    implements $DeviceListNotifierStateCopyWith<$Res> {
+  _$DeviceListNotifierStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +85,7 @@ class _$DeviceNotifierStateCopyWithImpl<$Res, $Val extends DeviceNotifierState>
 
 /// @nodoc
 abstract class _$$DeviceNotifierStateImplCopyWith<$Res>
-    implements $DeviceNotifierStateCopyWith<$Res> {
+    implements $DeviceListNotifierStateCopyWith<$Res> {
   factory _$$DeviceNotifierStateImplCopyWith(_$DeviceNotifierStateImpl value,
           $Res Function(_$DeviceNotifierStateImpl) then) =
       __$$DeviceNotifierStateImplCopyWithImpl<$Res>;
@@ -97,7 +99,8 @@ abstract class _$$DeviceNotifierStateImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DeviceNotifierStateImplCopyWithImpl<$Res>
-    extends _$DeviceNotifierStateCopyWithImpl<$Res, _$DeviceNotifierStateImpl>
+    extends _$DeviceListNotifierStateCopyWithImpl<$Res,
+        _$DeviceNotifierStateImpl>
     implements _$$DeviceNotifierStateImplCopyWith<$Res> {
   __$$DeviceNotifierStateImplCopyWithImpl(_$DeviceNotifierStateImpl _value,
       $Res Function(_$DeviceNotifierStateImpl) _then)
@@ -146,14 +149,14 @@ class _$DeviceNotifierStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DeviceNotifierState(currentDevice: $currentDevice, devices: $devices)';
+    return 'DeviceListNotifierState(currentDevice: $currentDevice, devices: $devices)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DeviceNotifierState'))
+      ..add(DiagnosticsProperty('type', 'DeviceListNotifierState'))
       ..add(DiagnosticsProperty('currentDevice', currentDevice))
       ..add(DiagnosticsProperty('devices', devices));
   }
@@ -188,7 +191,7 @@ class _$DeviceNotifierStateImpl
   }
 }
 
-abstract class _DeviceNotifierState implements DeviceNotifierState {
+abstract class _DeviceNotifierState implements DeviceListNotifierState {
   const factory _DeviceNotifierState(
       {final Device? currentDevice,
       required final List<Device> devices}) = _$DeviceNotifierStateImpl;

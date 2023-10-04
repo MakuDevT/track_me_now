@@ -7,14 +7,16 @@ part of 'track.model.dart';
 // **************************************************************************
 
 _$TrackImpl _$$TrackImplFromJson(Map<String, dynamic> json) => _$TrackImpl(
-      lat: (json['lat'] as num).toDouble(),
-      lng: (json['lng'] as num).toDouble(),
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      id: json['id'] as String,
+      latitude: json['latitude'] as String,
+      longitude: json['longitude'] as String,
+      dateCreated: DateTime.parse(json['dateCreated'] as String),
     );
 
 Map<String, dynamic> _$$TrackImplToJson(_$TrackImpl instance) =>
     <String, dynamic>{
-      'lat': instance.lat,
-      'lng': instance.lng,
-      'createdAt': instance.createdAt.toIso8601String(),
+      'id': instance.id,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'dateCreated': instance.dateCreated.toIso8601String(),
     };

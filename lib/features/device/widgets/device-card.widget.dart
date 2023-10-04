@@ -5,7 +5,7 @@ import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/mocks/chat.mock.dart';
 import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/chat.provider.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 
 class DeviceCard extends ConsumerWidget {
   final Device device;
@@ -14,7 +14,7 @@ class DeviceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Device? myDevice = ref.watch(deviceProvider).currentDevice;
+    Device? myDevice = ref.watch(deviceListProvider).currentDevice;
 
     return Card(
       elevation: 4,
@@ -66,15 +66,14 @@ class DeviceCard extends ConsumerWidget {
                             color: Colors.blue[900]),
                         children: [
                           TextSpan(
-                              text: device.id,
+                              text: device.model,
                               style: const TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white))
                         ]),
                   ),
-                  if (device.trackHistory != null &&
-                      device.trackHistory!.isNotEmpty)
+                  if (device.tracks != null && device.tracks!.isNotEmpty)
                     RichText(
                       text: TextSpan(
                           text: "Last Date Tracked: ",
@@ -84,7 +83,7 @@ class DeviceCard extends ConsumerWidget {
                           children: [
                             TextSpan(
                                 text: DateTimeUtil.formatDateTime(
-                                    device.trackHistory![0].createdAt),
+                                    device.tracks![0].dateCreated),
                                 style: const TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontWeight: FontWeight.w400,

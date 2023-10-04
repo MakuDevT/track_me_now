@@ -10,10 +10,10 @@ class Device with _$Device {
   const factory Device({
     required String id,
     // required String deviceId,
-    // required String model,
+    required String model,
     required String macAddress,
     required DateTime dateCreated,
-    List<Track>? trackHistory,
+    List<Track>? tracks,
   }) = _Device;
 
   factory Device.fromJson(Map<String, Object?> json) => _$DeviceFromJson(json);

@@ -8,9 +8,10 @@ part of 'device.model.dart';
 
 _$DeviceImpl _$$DeviceImplFromJson(Map<String, dynamic> json) => _$DeviceImpl(
       id: json['id'] as String,
+      model: json['model'] as String,
       macAddress: json['macAddress'] as String,
       dateCreated: DateTime.parse(json['dateCreated'] as String),
-      trackHistory: (json['trackHistory'] as List<dynamic>?)
+      tracks: (json['tracks'] as List<dynamic>?)
           ?.map((e) => Track.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -18,7 +19,8 @@ _$DeviceImpl _$$DeviceImplFromJson(Map<String, dynamic> json) => _$DeviceImpl(
 Map<String, dynamic> _$$DeviceImplToJson(_$DeviceImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'model': instance.model,
       'macAddress': instance.macAddress,
       'dateCreated': instance.dateCreated.toIso8601String(),
-      'trackHistory': instance.trackHistory,
+      'tracks': instance.tracks,
     };

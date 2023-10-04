@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/data/providers/device.provider.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/features/device/widgets/device-card.widget.dart';
 
 class DeviceListScreen extends ConsumerStatefulWidget {
@@ -13,7 +13,7 @@ class DeviceListScreen extends ConsumerStatefulWidget {
 class DeviceListScreenState extends ConsumerState<DeviceListScreen> {
   @override
   Widget build(BuildContext context) {
-    var devices = ref.watch(deviceProvider).devices;
+    var devices = ref.watch(deviceListProvider).devices;
 
     return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
