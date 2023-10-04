@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
-import 'package:track_me_now/data/models/track.model.dart';
+import 'package:track_me_now/data/models/track/track.model.dart';
 
 class TrackCard extends StatelessWidget {
   final Track track;

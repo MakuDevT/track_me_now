@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:track_me_now/data/mocks/device.mock.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:track_me_now/data/providers/device.provider.dart';
 import 'package:track_me_now/features/device/widgets/device-card.widget.dart';
 
-class DeviceListScreen extends StatefulWidget {
+class DeviceListScreen extends ConsumerStatefulWidget {
   const DeviceListScreen({super.key});
 
   @override
-  State<DeviceListScreen> createState() => _DeviceListScreenState();
+  DeviceListScreenState createState() => DeviceListScreenState();
 }
 
-class _DeviceListScreenState extends State<DeviceListScreen> {
+class DeviceListScreenState extends ConsumerState<DeviceListScreen> {
   @override
   Widget build(BuildContext context) {
+    var devices = ref.watch(deviceProvider).devices;
+
     return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        itemCount: mockDevices.length,
-        itemBuilder: (context, index) =>
-            DeviceCard(device: mockDevices[index]));
+        itemCount: devices.length,
+        itemBuilder: (context, index) => DeviceCard(device: devices[index]));
   }
 }

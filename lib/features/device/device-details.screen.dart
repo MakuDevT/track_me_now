@@ -1,34 +1,38 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/common/widgets/feedback/custom-error.widget.dart';
 import 'package:track_me_now/common/widgets/feedback/loading.widget.dart';
 import 'package:track_me_now/data/mocks/device.mock.dart';
-import 'package:track_me_now/data/models/device.model.dart';
-import 'package:track_me_now/data/models/track.model.dart';
+import 'package:track_me_now/data/models/device/device.model.dart';
+import 'package:track_me_now/data/models/track/track.model.dart';
+import 'package:track_me_now/data/providers/device.provider.dart';
 import 'package:track_me_now/features/device/widgets/track-card.widget.dart';
 
-class DeviceDetailsScreen extends StatefulWidget {
+class DeviceDetailsScreen extends ConsumerStatefulWidget {
   final String deviceId;
 
   const DeviceDetailsScreen({super.key, required this.deviceId});
 
   @override
-  State<DeviceDetailsScreen> createState() => _DeviceDetailsScreenState();
+  DeviceDetailsScreenState createState() => DeviceDetailsScreenState();
 }
 
-class _DeviceDetailsScreenState extends State<DeviceDetailsScreen> {
+class DeviceDetailsScreenState extends ConsumerState<DeviceDetailsScreen> {
   late Future<Device> fetchDevice = Future<Device>.delayed(
     const Duration(seconds: 1),
     () {
+      var devices = ref.watch(deviceProvider).devices;
+
       Device device =
-          mockDevices.firstWhere((device) => device.id == widget.deviceId);
-      if (device.trackHistory.isNotEmpty) {
-        trackHandler(device.trackHistory[0]);
+          devices.firstWhere((device) => device.id == widget.deviceId);
+      if (device.trackHistory != null && device.trackHistory!.isNotEmpty) {
+        trackHandler(device.trackHistory![0]);
         initialCenter =
-            LatLng(device.trackHistory[0].lat, device.trackHistory[0].lng);
+            LatLng(device.trackHistory![0].lat, device.trackHistory![0].lng);
       }
       return device;
     },
@@ -94,7 +98,7 @@ class _DeviceDetailsScreenState extends State<DeviceDetailsScreen> {
                                     color: Colors.blue[900]),
                                 children: [
                                   TextSpan(
-                                      text: device.deviceId,
+                                      text: device.id,
                                       style: const TextStyle(
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w400,
@@ -124,29 +128,31 @@ class _DeviceDetailsScreenState extends State<DeviceDetailsScreen> {
                                     color: Colors.blue[900]),
                                 children: [
                                   TextSpan(
-                                      text: device.model,
+                                      text: device.id,
                                       style: const TextStyle(
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w400,
                                       ))
                                 ]),
                           ),
-                          RichText(
-                            text: TextSpan(
-                                text: "Last Date Tracked: ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.blue[900]),
-                                children: [
-                                  TextSpan(
-                                      text: DateTimeUtil.formatDateTime(
-                                          device.trackHistory[0].createdAt),
-                                      style: const TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w400,
-                                      ))
-                                ]),
-                          ),
+                          if (device.trackHistory != null &&
+                              device.trackHistory!.isNotEmpty)
+                            RichText(
+                              text: TextSpan(
+                                  text: "Last Date Tracked: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.blue[900]),
+                                  children: [
+                                    TextSpan(
+                                        text: DateTimeUtil.formatDateTime(
+                                            device.trackHistory![0].createdAt),
+                                        style: const TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ))
+                                  ]),
+                            ),
                         ],
                       ),
                     ],
@@ -173,17 +179,19 @@ class _DeviceDetailsScreenState extends State<DeviceDetailsScreen> {
                     'Track History',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
-                  Expanded(
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: device.trackHistory.length,
-                          itemBuilder: (context, index) => TrackCard(
-                              track: device.trackHistory[index],
-                              onClick: trackHandler,
-                              isActive: marker?.position.latitude ==
-                                      device.trackHistory[index].lat &&
-                                  marker?.position.longitude ==
-                                      device.trackHistory[index].lng)))
+                  if (device.trackHistory != null &&
+                      device.trackHistory!.isNotEmpty)
+                    Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: device.trackHistory!.length,
+                            itemBuilder: (context, index) => TrackCard(
+                                track: device.trackHistory![index],
+                                onClick: trackHandler,
+                                isActive: marker?.position.latitude ==
+                                        device.trackHistory![index].lat &&
+                                    marker?.position.longitude ==
+                                        device.trackHistory![index].lng)))
                 ],
               ),
             );

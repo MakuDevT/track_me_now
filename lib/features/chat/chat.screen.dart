@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/data/models/chat.model.dart';
+import 'package:track_me_now/data/models/chat/chat.model.dart';
 import 'package:track_me_now/data/providers/chat.provider.dart';
 import 'package:track_me_now/data/providers/device.provider.dart';
 import 'package:track_me_now/features/chat/widgets/chat-item.widget.dart';
@@ -30,7 +30,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void sendHandler(String text) {
-    String? myDeviceId = ref.read(deviceProvider).currentDevice?.deviceId;
+    String? myDeviceId = ref.read(deviceProvider).currentDevice?.id;
 
     if (myDeviceId == null || text.isEmpty) return;
 

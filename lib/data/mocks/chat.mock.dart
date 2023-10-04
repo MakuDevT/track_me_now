@@ -1,4 +1,4 @@
-import 'package:track_me_now/data/models/chat.model.dart';
+import 'package:track_me_now/data/models/chat/chat.model.dart';
 
 List<Chat> mockChats = [
   Chat(
