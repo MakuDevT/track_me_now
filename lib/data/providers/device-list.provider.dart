@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/data/models/device/device-state.model.dart';
 import 'package:track_me_now/data/services/remote/device-api.service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:track_me_now/data/services/remote/track-api.service.dart';
 
 class DeviceListNotifier extends StateNotifier<DeviceListNotifierState> {
   DeviceListNotifier() : super(const DeviceListNotifierState(devices: [])) {
@@ -54,6 +55,19 @@ class DeviceListNotifier extends StateNotifier<DeviceListNotifierState> {
   void refetch() async {
     var devices = await DeviceApiService().getUserDevices();
     state = state.copyWith(devices: devices);
+  }
+
+  void updateLocation(double lat, double lng) async {
+    try {
+      if (state.currentDevice != null) {
+        var track = await TrackApiService()
+            .createTrack(state.currentDevice!.id, lat, lng);
+      } else {
+        throw 'No current device';
+      }
+    } catch (err) {
+//TODO: Error handling
+    }
   }
 }
 

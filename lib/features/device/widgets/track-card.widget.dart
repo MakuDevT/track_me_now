@@ -4,7 +4,7 @@ import 'package:track_me_now/data/models/track/track.model.dart';
 
 class TrackCard extends StatelessWidget {
   final Track track;
-  final Function(Track) onClick;
+  final VoidCallback onClick;
   final bool isActive;
 
   const TrackCard(
@@ -16,7 +16,7 @@ class TrackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onClick(track),
+      onTap: onClick,
       child: Card(
           elevation: isActive ? 2 : 1,
           color: isActive ? Colors.amber[600] : Theme.of(context).cardColor,

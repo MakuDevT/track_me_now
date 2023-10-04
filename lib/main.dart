@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/global.util.dart';
 import 'package:track_me_now/data/models/user/user.model.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/providers/user.provider.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
@@ -85,7 +86,7 @@ class MyAppState extends ConsumerState<MyApp> {
   }
 
   void postLocation(double lat, double lng) async {
-    print(">>>>>>>>> $lat $lng");
+    ref.read(deviceListProvider.notifier).updateLocation(lat, lng);
   }
 
   @override
