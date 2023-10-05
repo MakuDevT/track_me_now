@@ -24,9 +24,13 @@ class ChatItemState extends ConsumerState<ChatItem> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
-          device?.id == widget.chatItem.senderId ? paddingSize : 0,
+          device?.id == (widget.chatItem.deviceId ?? widget.chatItem.device?.id)
+              ? paddingSize
+              : 0,
           4,
-          device?.id == widget.chatItem.senderId ? 0 : paddingSize,
+          device?.id == (widget.chatItem.deviceId ?? widget.chatItem.device?.id)
+              ? 0
+              : paddingSize,
           4),
       child: GestureDetector(
         onLongPress: () {
@@ -35,7 +39,8 @@ class ChatItemState extends ConsumerState<ChatItem> {
           });
         },
         child: Card(
-          color: device?.id == widget.chatItem.senderId
+          color: device?.id ==
+                  (widget.chatItem.deviceId ?? widget.chatItem.device?.id)
               ? Colors.blue[100]
               : Colors.blue[300],
           child: Padding(
@@ -50,7 +55,7 @@ class ChatItemState extends ConsumerState<ChatItem> {
                     alignment: Alignment.centerRight,
                     child: Text(
                         DateTimeUtil.humanizeDateTime(
-                            widget.chatItem.createdAt),
+                            widget.chatItem.dateCreated),
                         textAlign: TextAlign.right,
                         style: TextStyle(
                             fontStyle: FontStyle.italic,

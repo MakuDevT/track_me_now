@@ -2,12 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rxdart/rxdart.dart';
+import 'package:track_me_now/common/utils/api.util.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 
 class AuthRepository {
   final SecureStorageService storage = SecureStorageService();
   final Dio _dio = Dio();
-  final String _baseUrl = 'http://localhost:4000';
+  final String _baseUrl = ApiUtil.getBaseUrl(noSuffix: true);
 
   final _authState = InMemoryStore<AppUser?>(null);
   Stream<AppUser?> authStateChanges() => _authState.stream;
@@ -40,6 +41,8 @@ class AuthRepository {
         'email': email,
         'password': password,
       });
+      final Map<String, dynamic> responseData = response.data['data'];
+      storage.saveToken(responseData['token']);
 
       print('Registration Successful: ${response.data}');
     } on DioException catch (err) {
@@ -50,6 +53,7 @@ class AuthRepository {
   }
 
   Future<void> signOutUser() async {
+    storage.clearToken();
     _authState.value = null;
   }
 

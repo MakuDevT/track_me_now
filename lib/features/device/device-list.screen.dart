@@ -13,7 +13,10 @@ class DeviceListScreen extends ConsumerStatefulWidget {
 class DeviceListScreenState extends ConsumerState<DeviceListScreen> {
   @override
   Widget build(BuildContext context) {
-    var devices = ref.watch(deviceListProvider).devices;
+    var myDevice = ref.watch(deviceListProvider).currentDevice;
+    var devices = myDevice != null
+        ? [myDevice, ...ref.watch(deviceListProvider).devices]
+        : ref.watch(deviceListProvider).devices;
 
     return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

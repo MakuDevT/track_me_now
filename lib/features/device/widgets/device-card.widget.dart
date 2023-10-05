@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:track_me_now/utils/datetime.util.dart';
-import 'package:track_me_now/data/mocks/chat.mock.dart';
+import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/chat.provider.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
@@ -98,7 +97,9 @@ class DeviceCard extends ConsumerWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 4, horizontal: 8)),
                           onPressed: () {
-                            context.push('/devices/${device.id}');
+                            // context.push('/devices/${device.id}');
+                            context.pushNamed('device-details',
+                                pathParameters: {'deviceId': device.id});
                           },
                           child: const Text(
                             'View Details',
@@ -111,11 +112,14 @@ class DeviceCard extends ConsumerWidget {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 4, horizontal: 8)),
                             onPressed: () async {
-                              //TODO: Call API related to rooms and message fetching
-                              ref
+                              var room = await ref
                                   .read(chatProvider.notifier)
-                                  .setChat(mockChats);
-                              context.push('/chat/X?deviceId=${device.id}');
+                                  .joinRoom(myDevice!.id, device.id);
+                              if (room != null) {
+                                context.pushNamed('chat',
+                                    pathParameters: {'roomId': room.id},
+                                    queryParameters: {'deviceId': device.id});
+                              }
                             },
                             child: const Text('Message'))
                     ],

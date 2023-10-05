@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/data/models/chat/chat.model.dart';
@@ -34,22 +32,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
 
     if (myDeviceId == null || text.isEmpty) return;
 
-    //TODO: Perform Socket call
-
-    ref.read(chatProvider.notifier).addChat(Chat(
-        id: Random().toString(),
-        senderId: myDeviceId,
-        receiverId: widget.deviceId,
-        createdAt: DateTime.now(),
-        message: text));
-
-    //TODO: Remove this code
-    ref.read(chatProvider.notifier).addChat(Chat(
-        id: Random().toString(),
-        senderId: widget.deviceId,
-        receiverId: myDeviceId,
-        createdAt: DateTime.now(),
-        message: "Hello"));
+    ref.read(chatProvider.notifier).sendChat(myDeviceId, text);
 
     textController.text = '';
 
@@ -58,7 +41,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Chat> chats = ref.watch(chatProvider);
+    final List<Chat> chats = ref.watch(chatProvider).chats;
 
     return Column(mainAxisSize: MainAxisSize.max, children: [
       Expanded(
