@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:track_me_now/common/utils/datetime.util.dart';
+import 'package:track_me_now/utils/datetime.util.dart';
 import 'package:track_me_now/data/mocks/chat.mock.dart';
 import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/chat.provider.dart';
