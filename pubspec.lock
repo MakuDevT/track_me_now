@@ -306,10 +306,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_background_geolocation
-      sha256: "585e7fe3fd67adbe88e0c7f75634f8d5121daff83c04212d8adf1c4cf126ca41"
+      sha256: "5fe621f823d970453a15dd341aa2ddc8102f02a88fb96490da163788419b6495"
       url: "https://pub.dev"
     source: hosted
-    version: "4.13.1"
+    version: "4.13.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -813,6 +813,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  socket_io_client:
+    dependency: "direct main"
+    description:
+      name: socket_io_client
+      sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3+1"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   source_gen:
     dependency: transitive
     description:

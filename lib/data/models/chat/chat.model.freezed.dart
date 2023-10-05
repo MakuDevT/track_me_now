@@ -21,10 +21,11 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String get id => throw _privateConstructorUsedError;
-  String get senderId => throw _privateConstructorUsedError;
-  String get receiverId => throw _privateConstructorUsedError;
+  String? get roomId => throw _privateConstructorUsedError;
+  String? get deviceId => throw _privateConstructorUsedError;
+  Device? get device => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get dateCreated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,10 +39,13 @@ abstract class $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String senderId,
-      String receiverId,
+      String? roomId,
+      String? deviceId,
+      Device? device,
       String message,
-      DateTime createdAt});
+      DateTime dateCreated});
+
+  $DeviceCopyWith<$Res>? get device;
 }
 
 /// @nodoc
@@ -58,33 +62,50 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   @override
   $Res call({
     Object? id = null,
-    Object? senderId = null,
-    Object? receiverId = null,
+    Object? roomId = freezed,
+    Object? deviceId = freezed,
+    Object? device = freezed,
     Object? message = null,
-    Object? createdAt = null,
+    Object? dateCreated = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: null == receiverId
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
-              as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceId: freezed == deviceId
+          ? _value.deviceId
+          : deviceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      device: freezed == device
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as Device?,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      dateCreated: null == dateCreated
+          ? _value.dateCreated
+          : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DeviceCopyWith<$Res>? get device {
+    if (_value.device == null) {
+      return null;
+    }
+
+    return $DeviceCopyWith<$Res>(_value.device!, (value) {
+      return _then(_value.copyWith(device: value) as $Val);
+    });
   }
 }
 
@@ -97,10 +118,14 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String senderId,
-      String receiverId,
+      String? roomId,
+      String? deviceId,
+      Device? device,
       String message,
-      DateTime createdAt});
+      DateTime dateCreated});
+
+  @override
+  $DeviceCopyWith<$Res>? get device;
 }
 
 /// @nodoc
@@ -114,31 +139,36 @@ class __$$ChatImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? senderId = null,
-    Object? receiverId = null,
+    Object? roomId = freezed,
+    Object? deviceId = freezed,
+    Object? device = freezed,
     Object? message = null,
-    Object? createdAt = null,
+    Object? dateCreated = null,
   }) {
     return _then(_$ChatImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiverId: null == receiverId
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
-              as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceId: freezed == deviceId
+          ? _value.deviceId
+          : deviceId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      device: freezed == device
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as Device?,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
+      dateCreated: null == dateCreated
+          ? _value.dateCreated
+          : dateCreated // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -149,10 +179,11 @@ class __$$ChatImplCopyWithImpl<$Res>
 class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
   const _$ChatImpl(
       {required this.id,
-      required this.senderId,
-      required this.receiverId,
+      this.roomId,
+      this.deviceId,
+      this.device,
       required this.message,
-      required this.createdAt});
+      required this.dateCreated});
 
   factory _$ChatImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatImplFromJson(json);
@@ -160,17 +191,19 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
   @override
   final String id;
   @override
-  final String senderId;
+  final String? roomId;
   @override
-  final String receiverId;
+  final String? deviceId;
+  @override
+  final Device? device;
   @override
   final String message;
   @override
-  final DateTime createdAt;
+  final DateTime dateCreated;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Chat(id: $id, senderId: $senderId, receiverId: $receiverId, message: $message, createdAt: $createdAt)';
+    return 'Chat(id: $id, roomId: $roomId, deviceId: $deviceId, device: $device, message: $message, dateCreated: $dateCreated)';
   }
 
   @override
@@ -179,10 +212,11 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
     properties
       ..add(DiagnosticsProperty('type', 'Chat'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('senderId', senderId))
-      ..add(DiagnosticsProperty('receiverId', receiverId))
+      ..add(DiagnosticsProperty('roomId', roomId))
+      ..add(DiagnosticsProperty('deviceId', deviceId))
+      ..add(DiagnosticsProperty('device', device))
       ..add(DiagnosticsProperty('message', message))
-      ..add(DiagnosticsProperty('createdAt', createdAt));
+      ..add(DiagnosticsProperty('dateCreated', dateCreated));
   }
 
   @override
@@ -191,19 +225,19 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
         (other.runtimeType == runtimeType &&
             other is _$ChatImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.senderId, senderId) ||
-                other.senderId == senderId) &&
-            (identical(other.receiverId, receiverId) ||
-                other.receiverId == receiverId) &&
+            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.deviceId, deviceId) ||
+                other.deviceId == deviceId) &&
+            (identical(other.device, device) || other.device == device) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.dateCreated, dateCreated) ||
+                other.dateCreated == dateCreated));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, senderId, receiverId, message, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, roomId, deviceId, device, message, dateCreated);
 
   @JsonKey(ignore: true)
   @override
@@ -222,23 +256,26 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
 abstract class _Chat implements Chat {
   const factory _Chat(
       {required final String id,
-      required final String senderId,
-      required final String receiverId,
+      final String? roomId,
+      final String? deviceId,
+      final Device? device,
       required final String message,
-      required final DateTime createdAt}) = _$ChatImpl;
+      required final DateTime dateCreated}) = _$ChatImpl;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$ChatImpl.fromJson;
 
   @override
   String get id;
   @override
-  String get senderId;
+  String? get roomId;
   @override
-  String get receiverId;
+  String? get deviceId;
+  @override
+  Device? get device;
   @override
   String get message;
   @override
-  DateTime get createdAt;
+  DateTime get dateCreated;
   @override
   @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>

@@ -8,17 +8,21 @@ part of 'chat.model.dart';
 
 _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       id: json['id'] as String,
-      senderId: json['senderId'] as String,
-      receiverId: json['receiverId'] as String,
+      roomId: json['roomId'] as String?,
+      deviceId: json['deviceId'] as String?,
+      device: json['device'] == null
+          ? null
+          : Device.fromJson(json['device'] as Map<String, dynamic>),
       message: json['message'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      dateCreated: DateTime.parse(json['dateCreated'] as String),
     );
 
 Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'senderId': instance.senderId,
-      'receiverId': instance.receiverId,
+      'roomId': instance.roomId,
+      'deviceId': instance.deviceId,
+      'device': instance.device,
       'message': instance.message,
-      'createdAt': instance.createdAt.toIso8601String(),
+      'dateCreated': instance.dateCreated.toIso8601String(),
     };

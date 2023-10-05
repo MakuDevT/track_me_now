@@ -22,6 +22,8 @@ DeviceListNotifierState _$DeviceListNotifierStateFromJson(
 /// @nodoc
 mixin _$DeviceListNotifierState {
   Device? get currentDevice => throw _privateConstructorUsedError;
+  double? get tempLat => throw _privateConstructorUsedError;
+  double? get tempLng => throw _privateConstructorUsedError;
   List<Device> get devices => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +38,11 @@ abstract class $DeviceListNotifierStateCopyWith<$Res> {
           $Res Function(DeviceListNotifierState) then) =
       _$DeviceListNotifierStateCopyWithImpl<$Res, DeviceListNotifierState>;
   @useResult
-  $Res call({Device? currentDevice, List<Device> devices});
+  $Res call(
+      {Device? currentDevice,
+      double? tempLat,
+      double? tempLng,
+      List<Device> devices});
 
   $DeviceCopyWith<$Res>? get currentDevice;
 }
@@ -56,6 +62,8 @@ class _$DeviceListNotifierStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? currentDevice = freezed,
+    Object? tempLat = freezed,
+    Object? tempLng = freezed,
     Object? devices = null,
   }) {
     return _then(_value.copyWith(
@@ -63,6 +71,14 @@ class _$DeviceListNotifierStateCopyWithImpl<$Res,
           ? _value.currentDevice
           : currentDevice // ignore: cast_nullable_to_non_nullable
               as Device?,
+      tempLat: freezed == tempLat
+          ? _value.tempLat
+          : tempLat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tempLng: freezed == tempLng
+          ? _value.tempLng
+          : tempLng // ignore: cast_nullable_to_non_nullable
+              as double?,
       devices: null == devices
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
@@ -91,7 +107,11 @@ abstract class _$$DeviceNotifierStateImplCopyWith<$Res>
       __$$DeviceNotifierStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Device? currentDevice, List<Device> devices});
+  $Res call(
+      {Device? currentDevice,
+      double? tempLat,
+      double? tempLng,
+      List<Device> devices});
 
   @override
   $DeviceCopyWith<$Res>? get currentDevice;
@@ -110,6 +130,8 @@ class __$$DeviceNotifierStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentDevice = freezed,
+    Object? tempLat = freezed,
+    Object? tempLng = freezed,
     Object? devices = null,
   }) {
     return _then(_$DeviceNotifierStateImpl(
@@ -117,6 +139,14 @@ class __$$DeviceNotifierStateImplCopyWithImpl<$Res>
           ? _value.currentDevice
           : currentDevice // ignore: cast_nullable_to_non_nullable
               as Device?,
+      tempLat: freezed == tempLat
+          ? _value.tempLat
+          : tempLat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tempLng: freezed == tempLng
+          ? _value.tempLng
+          : tempLng // ignore: cast_nullable_to_non_nullable
+              as double?,
       devices: null == devices
           ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
@@ -131,7 +161,10 @@ class _$DeviceNotifierStateImpl
     with DiagnosticableTreeMixin
     implements _DeviceNotifierState {
   const _$DeviceNotifierStateImpl(
-      {this.currentDevice, required final List<Device> devices})
+      {this.currentDevice,
+      this.tempLat,
+      this.tempLng,
+      required final List<Device> devices})
       : _devices = devices;
 
   factory _$DeviceNotifierStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -139,6 +172,10 @@ class _$DeviceNotifierStateImpl
 
   @override
   final Device? currentDevice;
+  @override
+  final double? tempLat;
+  @override
+  final double? tempLng;
   final List<Device> _devices;
   @override
   List<Device> get devices {
@@ -149,7 +186,7 @@ class _$DeviceNotifierStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DeviceListNotifierState(currentDevice: $currentDevice, devices: $devices)';
+    return 'DeviceListNotifierState(currentDevice: $currentDevice, tempLat: $tempLat, tempLng: $tempLng, devices: $devices)';
   }
 
   @override
@@ -158,6 +195,8 @@ class _$DeviceNotifierStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'DeviceListNotifierState'))
       ..add(DiagnosticsProperty('currentDevice', currentDevice))
+      ..add(DiagnosticsProperty('tempLat', tempLat))
+      ..add(DiagnosticsProperty('tempLng', tempLng))
       ..add(DiagnosticsProperty('devices', devices));
   }
 
@@ -168,12 +207,14 @@ class _$DeviceNotifierStateImpl
             other is _$DeviceNotifierStateImpl &&
             (identical(other.currentDevice, currentDevice) ||
                 other.currentDevice == currentDevice) &&
+            (identical(other.tempLat, tempLat) || other.tempLat == tempLat) &&
+            (identical(other.tempLng, tempLng) || other.tempLng == tempLng) &&
             const DeepCollectionEquality().equals(other._devices, _devices));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentDevice,
+  int get hashCode => Object.hash(runtimeType, currentDevice, tempLat, tempLng,
       const DeepCollectionEquality().hash(_devices));
 
   @JsonKey(ignore: true)
@@ -194,6 +235,8 @@ class _$DeviceNotifierStateImpl
 abstract class _DeviceNotifierState implements DeviceListNotifierState {
   const factory _DeviceNotifierState(
       {final Device? currentDevice,
+      final double? tempLat,
+      final double? tempLng,
       required final List<Device> devices}) = _$DeviceNotifierStateImpl;
 
   factory _DeviceNotifierState.fromJson(Map<String, dynamic> json) =
@@ -201,6 +244,10 @@ abstract class _DeviceNotifierState implements DeviceListNotifierState {
 
   @override
   Device? get currentDevice;
+  @override
+  double? get tempLat;
+  @override
+  double? get tempLng;
   @override
   List<Device> get devices;
   @override

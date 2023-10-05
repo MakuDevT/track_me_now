@@ -1,55 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/common/utils/global.util.dart';
-import 'package:track_me_now/data/models/user/user.model.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
-import 'package:track_me_now/data/providers/user.provider.dart';
+import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 import 'package:track_me_now/features/authentication/login.screen.dart';
 import 'package:track_me_now/features/authentication/register.screen.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
-    as bg;
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-final _router = GoRouter(
-  initialLocation: '/,login',
-  routes: [
-    GoRoute(
-        path: '/',
+GoRouter _router(WidgetRef ref) {
+  return GoRouter(
+    initialLocation: '/login',
+    routes: [
+      GoRoute(
+        path: '/home',
         name: 'home',
         builder: (context, state) => const MainPage(),
-        routes: [
-          GoRoute(
-              path: 'register',
-              name: 'register',
-              pageBuilder: (context, state) => MaterialPage(
-                  key: state.pageKey,
-                  fullscreenDialog: true,
-                  child: RegisterScreen())),
-          GoRoute(
-              path: 'login',
-              name: 'login',
-              pageBuilder: (context, state) => MaterialPage(
-                  key: state.pageKey,
-                  fullscreenDialog: true,
-                  child: LoginScreen())),
-        ]),
-    GoRoute(
-      path: '/devices/:deviceId',
-      builder: (context, state) =>
-          DeviceDetailsPage(deviceId: state.pathParameters['deviceId']),
-    ),
-    GoRoute(
-      path: '/chat/:roomId',
-      builder: (context, state) => ChatPage(
-          roomId: state.pathParameters['roomId'],
-          deviceId: state.uri.queryParameters['deviceId']),
-    ),
-  ],
-);
+      ),
+      GoRoute(
+        path: '/devices/:deviceId',
+        name: 'device-details',
+        builder: (context, state) =>
+            DeviceDetailsPage(deviceId: state.pathParameters['deviceId']),
+      ),
+      GoRoute(
+        path: '/chat/:roomId',
+        name: 'chat',
+        builder: (context, state) => ChatPage(
+            roomId: state.pathParameters['roomId'],
+            deviceId: state.uri.queryParameters['deviceId']),
+      ),
+      GoRoute(
+          path: '/register',
+          name: 'register',
+          pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              fullscreenDialog: true,
+              child: RegisterScreen())),
+      GoRoute(
+          redirect: (context, state) async {
+            SecureStorageService storage = SecureStorageService();
+            var token = await storage.getToken();
+
+            if (token != null) {
+              await ref.read(deviceListProvider.notifier).initialize();
+              return '/home';
+            }
+            return null;
+          },
+          path: '/login',
+          name: 'login',
+          pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              fullscreenDialog: true,
+              child: LoginScreen())),
+    ],
+  );
+}
 
 void main() {
   usePathUrlStrategy();
@@ -65,61 +74,14 @@ class MyApp extends ConsumerStatefulWidget {
 
 class MyAppState extends ConsumerState<MyApp> {
   @override
-  void initState() {
-    super.initState();
-
-    bg.BackgroundGeolocation.onLocation((bg.Location location) {
-      print('[location] - $location');
-      postLocation(location.coords.latitude, location.coords.longitude);
-    });
-
-    // Fired whenever the plugin changes motion-state (stationary->moving and vice-versa)
-    bg.BackgroundGeolocation.onMotionChange((bg.Location location) {
-      print('[motionchange] - $location');
-    });
-
-    // Fired whenever the state of location-services changes.  Always fired at boot
-    bg.BackgroundGeolocation.onProviderChange((bg.ProviderChangeEvent event) {
-      print('[providerchange] - $event');
-    });
-
-    ////
-    // 2.  Configure the plugin
-    //
-    bg.BackgroundGeolocation.ready(bg.Config(
-            desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
-            locationUpdateInterval: 1000,
-            distanceFilter: 0,
-            stopOnTerminate: false,
-            startOnBoot: true,
-            debug: true,
-            allowIdenticalLocations: true,
-            enableHeadless: true,
-            logLevel: bg.Config.LOG_LEVEL_VERBOSE))
-        .then((bg.State state) {
-      if (!state.enabled) {
-        ////
-        // 3.  Start the plugin.
-        //
-        bg.BackgroundGeolocation.start();
-      }
-    });
-  }
-
-  void postLocation(double lat, double lng) async {
-    ref.read(deviceListProvider.notifier).updateLocation(lat, lng);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      scaffoldMessengerKey: Globals.navigatorKey,
       title: 'Track Me Now',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      routerConfig: _router,
+      routerConfig: _router(ref),
     );
   }
 }

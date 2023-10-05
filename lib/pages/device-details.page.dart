@@ -15,9 +15,14 @@ class DeviceDetailsPage extends StatelessWidget {
           elevation: 2,
           foregroundColor: Colors.white,
           backgroundColor: Theme.of(context).primaryColor),
-      body: deviceId == null
-          ? const CustomErrorWidget(message: 'No device ID provided')
-          : DeviceDetailsScreen(deviceId: deviceId!),
+      body: WillPopScope(
+          onWillPop: () async {
+            await Future.delayed(const Duration(milliseconds: 500));
+            return true;
+          },
+          child: deviceId == null
+              ? const CustomErrorWidget(message: 'No device ID provided')
+              : DeviceDetailsScreen(deviceId: deviceId!)),
     );
   }
 }

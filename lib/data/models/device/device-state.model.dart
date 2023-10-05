@@ -9,6 +9,8 @@ part 'device-state.model.g.dart';
 class DeviceListNotifierState with _$DeviceListNotifierState {
   const factory DeviceListNotifierState({
     Device? currentDevice,
+    double? tempLat,
+    double? tempLng,
     required List<Device> devices,
   }) = _DeviceNotifierState;
 
