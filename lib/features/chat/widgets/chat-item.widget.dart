@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:track_me_now/common/utils/datetime.util.dart';
+import 'package:track_me_now/utils/datetime.util.dart';
 import 'package:track_me_now/data/models/chat/chat.model.dart';
 import 'package:track_me_now/data/models/device/device.model.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';

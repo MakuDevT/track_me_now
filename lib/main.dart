@@ -4,19 +4,39 @@ import 'package:track_me_now/common/utils/global.util.dart';
 import 'package:track_me_now/data/models/user/user.model.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/providers/user.provider.dart';
+import 'package:track_me_now/features/authentication/login.screen.dart';
+import 'package:track_me_now/features/authentication/register.screen.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 final _router = GoRouter(
+  initialLocation: '/,login',
   routes: [
     GoRoute(
-      path: '/',
-      builder: (context, state) => const MainPage(),
-    ),
+        path: '/',
+        name: 'home',
+        builder: (context, state) => const MainPage(),
+        routes: [
+          GoRoute(
+              path: 'register',
+              name: 'register',
+              pageBuilder: (context, state) => MaterialPage(
+                  key: state.pageKey,
+                  fullscreenDialog: true,
+                  child: RegisterScreen())),
+          GoRoute(
+              path: 'login',
+              name: 'login',
+              pageBuilder: (context, state) => MaterialPage(
+                  key: state.pageKey,
+                  fullscreenDialog: true,
+                  child: LoginScreen())),
+        ]),
     GoRoute(
       path: '/devices/:deviceId',
       builder: (context, state) =>
@@ -32,6 +52,7 @@ final _router = GoRouter(
 );
 
 void main() {
+  usePathUrlStrategy();
   runApp(const ProviderScope(child: MyApp()));
 }
 

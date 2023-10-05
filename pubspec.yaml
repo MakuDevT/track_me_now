@@ -47,6 +47,12 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   mac_address: ^1.0.0
+  url_strategy: ^0.2.0
+  riverpod_generator: ^2.3.2
+  riverpod_annotation: ^2.1.6
+  riverpod_lint: ^2.1.0
+  build_runner: ^2.4.6
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:

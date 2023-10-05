@@ -23,10 +23,10 @@ class BaseApiService {
           onRequest: (options, handler) async {
             var token = await _secureStorageService.getToken();
             //TODO: Reneable this commented logic once login is implemented
-            // if (token != null) {
+            if (token != null) {
             options.headers['Authorization'] =
-                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNsbmI3MmVoajAwMDB0a2Nxcmp0Mnhva2kiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY5NjM5MDQzNywiZXhwIjoxNjk2OTk1MjM3fQ.AZM6k_Al0IFyN22ySaxR29z1HYHCFscOBOuV3Frn2iM';
-            // }
+                'Bearer $token';
+            }
             return handler.next(options);
           },
           onResponse: (response, handler) {
