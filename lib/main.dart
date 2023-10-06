@@ -33,29 +33,28 @@ GoRouter _router(WidgetRef ref) {
             deviceId: state.uri.queryParameters['deviceId']),
       ),
       GoRoute(
+        redirect: (context, state) async {
+          SecureStorageService storage = SecureStorageService();
+          var token = await storage.getToken();
+
+          if (token != null) {
+            await ref.read(deviceListProvider.notifier).initialize();
+            return '/';
+          }
+          return null;
+        },
+        path: '/login',
+        name: 'login',
+        pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey, fullscreenDialog: true, child: LoginScreen()),
+      ),
+      GoRoute(
           path: '/register',
           name: 'register',
           pageBuilder: (context, state) => MaterialPage(
               key: state.pageKey,
               fullscreenDialog: true,
               child: RegisterScreen())),
-      GoRoute(
-          redirect: (context, state) async {
-            SecureStorageService storage = SecureStorageService();
-            var token = await storage.getToken();
-
-            if (token != null) {
-              await ref.read(deviceListProvider.notifier).initialize();
-              return '/';
-            }
-            return null;
-          },
-          path: '/login',
-          name: 'login',
-          pageBuilder: (context, state) => MaterialPage(
-              key: state.pageKey,
-              fullscreenDialog: true,
-              child: LoginScreen())),
     ],
   );
 }

@@ -24,9 +24,14 @@ class AuthRepository {
         final Map<String, dynamic> responseData = response.data['data'];
         storage.saveToken(responseData['token']);
         _authState.value = AppUser(
-            token: responseData['token'],
-            email: responseData['email'],
-            uid: responseData['id']);
+          token: responseData['token'],
+          email: responseData['email'],
+          uid: responseData['id'],
+          trialDue: responseData['trialDue'],
+          isActive: responseData['isActive'],
+          isAdmin: responseData['isAdmin'],
+          isSubscribed: responseData['isSubscribed'],
+        );
       }
     } on DioException catch (err) {
       throw err.message.toString();
@@ -74,8 +79,21 @@ final authStateChangesProvider = StreamProvider.autoDispose<AppUser?>((ref) {
 class AppUser {
   final String? uid;
   final String? email;
+  final String? trialDue;
   final String token;
-  const AppUser({this.uid, this.email, required this.token});
+  final bool? isActive;
+  final bool? isSubscribed;
+  final bool? isAdmin;
+
+  const AppUser({
+    this.uid,
+    this.email,
+    this.trialDue,
+    required this.token,
+    this.isActive,
+    this.isSubscribed,
+    this.isAdmin,
+  });
 }
 
 class InMemoryStore<T> {
