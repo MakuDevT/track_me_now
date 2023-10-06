@@ -15,7 +15,7 @@ GoRouter _router(WidgetRef ref) {
     initialLocation: '/login',
     routes: [
       GoRoute(
-        path: '/home',
+        path: '/',
         name: 'home',
         builder: (context, state) => const MainPage(),
       ),
@@ -46,7 +46,7 @@ GoRouter _router(WidgetRef ref) {
 
             if (token != null) {
               await ref.read(deviceListProvider.notifier).initialize();
-              return '/home';
+              return '/';
             }
             return null;
           },
