@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:track_me_now/common/utils/tracker.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 import 'package:track_me_now/features/authentication/login.screen.dart';
@@ -9,6 +10,8 @@ import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
+    as bg;
 
 GoRouter _router(WidgetRef ref) {
   return GoRouter(
@@ -60,8 +63,10 @@ GoRouter _router(WidgetRef ref) {
 }
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   runApp(const ProviderScope(child: MyApp()));
+  bg.BackgroundGeolocation.registerHeadlessTask(headlessTask);
 }
 
 class MyApp extends ConsumerStatefulWidget {
