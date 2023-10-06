@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 
-
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
@@ -26,19 +25,19 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
       registerScreenControllerProvider,
       (previousState, state) {
         if (state.hasValue) {
-          context.pop();
+          context.goNamed('home');
         }
 
         if (state.hasError && !state.isLoading) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(
-                backgroundColor: Colors.redAccent,
-                content: Text(state.error.toString())));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text(state.error.toString())));
         }
       },
     );
 
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,7 +61,8 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
             state.isLoading
                 ? const CircularProgressIndicator()
-                : ElevatedButton(
+                : 
+                ElevatedButton(
                     onPressed: () {
                       final String email = emailController.text;
                       final String password = passwordController.text;
