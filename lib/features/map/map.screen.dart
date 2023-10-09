@@ -19,9 +19,10 @@ class MapsScreenState extends ConsumerState<MapsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var markers = ref
-        .watch(deviceListProvider)
-        .devices
+    var markers = [
+      ref.watch(deviceListProvider).currentDevice!,
+      ...ref.watch(deviceListProvider).devices
+    ]
         .where((device) => device.tracks != null)
         .map(
           (device) => Marker(
@@ -31,7 +32,7 @@ class MapsScreenState extends ConsumerState<MapsScreen> {
                   : BitmapDescriptor.defaultMarker,
               markerId: MarkerId(device.id),
               position: LatLng(device.tracks![0].lat, device.tracks![0].lng),
-              infoWindow: InfoWindow(title: device.id),
+              infoWindow: InfoWindow(title: device.model),
               alpha: widget.deviceId != null && device.id != widget.deviceId
                   ? 0.6
                   : 1),
