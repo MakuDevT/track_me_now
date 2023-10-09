@@ -59,6 +59,7 @@ class AuthRepository {
 
   Future<void> signOutUser() async {
     storage.clearToken();
+    storage.clearDeviceId();
     _authState.value = null;
   }
 
