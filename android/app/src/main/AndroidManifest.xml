@@ -2,6 +2,7 @@
     <application
         tools:replace="android:label"
         android:label="Track Me Now"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
