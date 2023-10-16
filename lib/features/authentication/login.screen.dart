@@ -19,10 +19,10 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(
     BuildContext context,
   ) {
-    final state = ref.watch(registerScreenControllerProvider);
+    final state = ref.watch(authenticationScreenControllerProvider);
 
     ref.listen<AsyncValue<void>>(
-      registerScreenControllerProvider,
+      authenticationScreenControllerProvider,
       (previousState, state) async {
         if (state.hasValue) {
           await ref.read(deviceListProvider.notifier).initialize();
@@ -56,7 +56,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               decoration: const InputDecoration(labelText: 'Password'),
             ),
             GestureDetector(
-              onTap: () => {context.goNamed('register')},
+              onTap: () => {context.pushNamed('register')},
               child: Text("register account"),
             ),
             state.isLoading
@@ -66,7 +66,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       final String email = emailController.text;
                       final String password = passwordController.text;
                       ref
-                          .read(registerScreenControllerProvider.notifier)
+                          .read(authenticationScreenControllerProvider.notifier)
                           .login(email, password);
                     },
                     child: const Text('login'),

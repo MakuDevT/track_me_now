@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:track_me_now/features/authentication/data/registration.repository.dart';
+import 'package:track_me_now/features/authentication/data/authentication.repository.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
+
+import '../../authentication/change-password.screen.dart';
 
 class ProfileViewScreen extends ConsumerStatefulWidget {
   const ProfileViewScreen({super.key});
@@ -17,17 +19,16 @@ class ProfileViewScreenState extends ConsumerState<ProfileViewScreen> {
     // ref.listen(authStateChangesProvider, (previousState, state) {
     //   state.whenData((value) => {print(value?.email)});
     // });
-    return Container(
-      width: double.infinity,
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Profile View Screen'),
+          ChangePasswordScreen(),
           ElevatedButton(
             onPressed: () {
-              ref.read(registerScreenControllerProvider.notifier).signOut();
-              context.goNamed('login');
+              ref
+                  .read(authenticationScreenControllerProvider.notifier)
+                  .signOut();
+              context.pushReplacementNamed('login');
             },
             child: const Text('Logout'),
           ),

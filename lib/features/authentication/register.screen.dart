@@ -21,12 +21,11 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(
     BuildContext context,
   ) {
-    final state = ref.watch(registerScreenControllerProvider);
+    final state = ref.watch(authenticationScreenControllerProvider);
     ref.listen<AsyncValue<void>>(
-      registerScreenControllerProvider,
+      authenticationScreenControllerProvider,
       (previousState, state) async {
         if (state.hasValue) {
-          await ref.read(deviceListProvider.notifier).initialize();
           context.goNamed('home');
         }
 
@@ -70,7 +69,7 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
                       final String confirmPassword =
                           confirmPasswordController.text;
                       ref
-                          .read(registerScreenControllerProvider.notifier)
+                          .read(authenticationScreenControllerProvider.notifier)
                           .register(email, password, confirmPassword);
                     },
                     child: const Text('Register'),
