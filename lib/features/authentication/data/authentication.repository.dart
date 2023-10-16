@@ -42,13 +42,30 @@ class AuthRepository {
     }
   }
 
-  Future<Register> getUserInfo() async {
+  Future<Register> getUserInfo(String token) async {
     try {
-      Response response = await _dio.post('$_baseUrl/api/user/information');
+      Response response = await _dio.get('$_baseUrl/api/user/information',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = response.data['data'];
+        _authState.value = AppUser(
+          token: responseData['token'],
+          email: responseData['email'],
+          uid: responseData['id'],
+          trialDue: responseData['trialDue'],
+          isActive: responseData['isActive'],
+          isAdmin: responseData['isAdmin'],
+          isSubscribed: responseData['isSubscribed'],
+        );
+      }
+      print("QQQQQ2 ${_authState.value}");
+
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
+      print("QQQQ6 $err");
       throw err.message.toString();
     } catch (e) {
+      print("QQQQ7 $e");
       throw e.toString();
     }
   }
@@ -61,6 +78,19 @@ class AuthRepository {
       });
       final Map<String, dynamic> responseData = response.data['data'];
       storage.saveToken(responseData['token']);
+      if (response.statusCode == 201) {
+        final Map<String, dynamic> responseData = response.data['data'];
+        storage.saveToken(responseData['token']);
+        _authState.value = AppUser(
+          token: responseData['token'],
+          email: responseData['email'],
+          uid: responseData['id'],
+          trialDue: responseData['trialDue'],
+          isActive: responseData['isActive'],
+          isAdmin: responseData['isAdmin'],
+          isSubscribed: responseData['isSubscribed'],
+        );
+      }
     } on DioException catch (err) {
       throw err.message.toString();
     } catch (e) {
@@ -104,7 +134,7 @@ class AppUser {
   final String? uid;
   final String? email;
   final String? trialDue;
-  final String token;
+  final String? token;
   final bool? isActive;
   final bool? isSubscribed;
   final bool? isAdmin;
@@ -113,7 +143,7 @@ class AppUser {
     this.uid,
     this.email,
     this.trialDue,
-    required this.token,
+    this.token,
     this.isActive,
     this.isSubscribed,
     this.isAdmin,

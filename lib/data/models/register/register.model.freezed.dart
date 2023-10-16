@@ -22,8 +22,8 @@ Register _$RegisterFromJson(Map<String, dynamic> json) {
 mixin _$Register {
   String? get uid => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  String get trialDue => throw _privateConstructorUsedError;
-  String get token => throw _privateConstructorUsedError;
+  String? get trialDue => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
   bool? get isActive => throw _privateConstructorUsedError;
   bool? get isSubscribed => throw _privateConstructorUsedError;
   bool? get isAdmin => throw _privateConstructorUsedError;
@@ -42,8 +42,8 @@ abstract class $RegisterCopyWith<$Res> {
   $Res call(
       {String? uid,
       String? email,
-      String trialDue,
-      String token,
+      String? trialDue,
+      String? token,
       bool? isActive,
       bool? isSubscribed,
       bool? isAdmin});
@@ -64,8 +64,8 @@ class _$RegisterCopyWithImpl<$Res, $Val extends Register>
   $Res call({
     Object? uid = freezed,
     Object? email = freezed,
-    Object? trialDue = null,
-    Object? token = null,
+    Object? trialDue = freezed,
+    Object? token = freezed,
     Object? isActive = freezed,
     Object? isSubscribed = freezed,
     Object? isAdmin = freezed,
@@ -79,14 +79,14 @@ class _$RegisterCopyWithImpl<$Res, $Val extends Register>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      trialDue: null == trialDue
+      trialDue: freezed == trialDue
           ? _value.trialDue
           : trialDue // ignore: cast_nullable_to_non_nullable
-              as String,
-      token: null == token
+              as String?,
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -114,8 +114,8 @@ abstract class _$$RegisterImplCopyWith<$Res>
   $Res call(
       {String? uid,
       String? email,
-      String trialDue,
-      String token,
+      String? trialDue,
+      String? token,
       bool? isActive,
       bool? isSubscribed,
       bool? isAdmin});
@@ -134,8 +134,8 @@ class __$$RegisterImplCopyWithImpl<$Res>
   $Res call({
     Object? uid = freezed,
     Object? email = freezed,
-    Object? trialDue = null,
-    Object? token = null,
+    Object? trialDue = freezed,
+    Object? token = freezed,
     Object? isActive = freezed,
     Object? isSubscribed = freezed,
     Object? isAdmin = freezed,
@@ -149,14 +149,14 @@ class __$$RegisterImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      trialDue: null == trialDue
+      trialDue: freezed == trialDue
           ? _value.trialDue
           : trialDue // ignore: cast_nullable_to_non_nullable
-              as String,
-      token: null == token
+              as String?,
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -177,13 +177,13 @@ class __$$RegisterImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RegisterImpl with DiagnosticableTreeMixin implements _Register {
   const _$RegisterImpl(
-      {required this.uid,
-      required this.email,
-      this.trialDue = 'Cannot Fetch Data',
-      required this.token,
-      required this.isActive,
-      required this.isSubscribed,
-      required this.isAdmin});
+      {this.uid,
+      this.email,
+      this.trialDue,
+      this.token,
+      this.isActive,
+      this.isSubscribed,
+      this.isAdmin});
 
   factory _$RegisterImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterImplFromJson(json);
@@ -193,10 +193,9 @@ class _$RegisterImpl with DiagnosticableTreeMixin implements _Register {
   @override
   final String? email;
   @override
-  @JsonKey()
-  final String trialDue;
+  final String? trialDue;
   @override
-  final String token;
+  final String? token;
   @override
   final bool? isActive;
   @override
@@ -261,13 +260,13 @@ class _$RegisterImpl with DiagnosticableTreeMixin implements _Register {
 
 abstract class _Register implements Register {
   const factory _Register(
-      {required final String? uid,
-      required final String? email,
-      final String trialDue,
-      required final String token,
-      required final bool? isActive,
-      required final bool? isSubscribed,
-      required final bool? isAdmin}) = _$RegisterImpl;
+      {final String? uid,
+      final String? email,
+      final String? trialDue,
+      final String? token,
+      final bool? isActive,
+      final bool? isSubscribed,
+      final bool? isAdmin}) = _$RegisterImpl;
 
   factory _Register.fromJson(Map<String, dynamic> json) =
       _$RegisterImpl.fromJson;
@@ -277,9 +276,9 @@ abstract class _Register implements Register {
   @override
   String? get email;
   @override
-  String get trialDue;
+  String? get trialDue;
   @override
-  String get token;
+  String? get token;
   @override
   bool? get isActive;
   @override

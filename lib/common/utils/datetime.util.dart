@@ -15,4 +15,8 @@ class DateTimeUtil {
   static String humanizeDateTime(DateTime dateTime) {
     return Jiffy.parseFromDateTime(dateTime.toLocal()).fromNow();
   }
+
+  static bool isPast(DateTime target, DateTime reference) {
+    return target.isBefore(reference);
+  }
 }

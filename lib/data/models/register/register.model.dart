@@ -7,13 +7,13 @@ part 'register.model.g.dart';
 @freezed
 class Register with _$Register {
   const factory Register({
-    required String? uid,
-    required String? email,
-    @Default('Cannot Fetch Data') String trialDue,
-    required String token,
-    required bool? isActive,
-    required bool? isSubscribed,
-    required bool? isAdmin,
+    String? uid,
+    String? email,
+    String? trialDue,
+    String? token,
+    bool? isActive,
+    bool? isSubscribed,
+    bool? isAdmin,
   }) = _Register;
 
   factory Register.fromJson(Map<String, dynamic> json) =>

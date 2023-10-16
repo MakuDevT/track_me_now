@@ -10,8 +10,8 @@ _$RegisterImpl _$$RegisterImplFromJson(Map<String, dynamic> json) =>
     _$RegisterImpl(
       uid: json['uid'] as String?,
       email: json['email'] as String?,
-      trialDue: json['trialDue'] as String? ?? 'Cannot Fetch Data',
-      token: json['token'] as String,
+      trialDue: json['trialDue'] as String?,
+      token: json['token'] as String?,
       isActive: json['isActive'] as bool?,
       isSubscribed: json['isSubscribed'] as bool?,
       isAdmin: json['isAdmin'] as bool?,

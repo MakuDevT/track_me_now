@@ -4,6 +4,7 @@ import 'package:track_me_now/common/utils/tracker.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 import 'package:track_me_now/features/authentication/login.screen.dart';
+import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/authentication/register.screen.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
@@ -42,6 +43,9 @@ GoRouter _router(WidgetRef ref) {
 
           if (token != null) {
             await ref.read(deviceListProvider.notifier).initialize();
+            await ref
+                .read(authenticationScreenControllerProvider.notifier)
+                .getUserInfo();
             return '/';
           }
           return null;
