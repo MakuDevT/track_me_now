@@ -16,9 +16,6 @@ class ProfileViewScreen extends ConsumerStatefulWidget {
 class ProfileViewScreenState extends ConsumerState<ProfileViewScreen> {
   @override
   Widget build(BuildContext context) {
-    // ref.listen(authStateChangesProvider, (previousState, state) {
-    //   state.whenData((value) => {print(value?.email)});
-    // });
     return SingleChildScrollView(
       child: Column(
         children: [

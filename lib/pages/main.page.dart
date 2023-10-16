@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/api.util.dart';
+import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
+import 'package:track_me_now/features/authentication/data/authentication.repository.dart';
+import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
 import 'package:track_me_now/features/onboarding/onboarding.screen.dart';
@@ -25,8 +28,7 @@ class MainPageState extends ConsumerState<MainPage> {
   ];
 
   int _selectedIndex = 0;
-  bool showBackdrop = false;
-  bool isPaymentNEeded = false;
+  DateTime? trialDue;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,9 +36,9 @@ class MainPageState extends ConsumerState<MainPage> {
     });
   }
 
-  void closeOnboarding() {
+  void closeOnboarding(DateTime newTrialDue) {
     setState(() {
-      showBackdrop = false;
+      trialDue = newTrialDue;
     });
   }
 
@@ -95,6 +97,16 @@ class MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authStateChangesProvider, (previousState, state) {
+      state.whenData((value) => {
+            setState(() {
+              trialDue = value?.trialDue != null
+                  ? DateTime.parse(value!.trialDue!)
+                  : null;
+            })
+          });
+    });
+
     return Stack(
       children: [
         Scaffold(
@@ -133,8 +145,9 @@ class MainPageState extends ConsumerState<MainPage> {
             onTap: _onItemTapped,
           ),
         ),
-        if (showBackdrop) OnboardingScreen(onClose: closeOnboarding),
-        if (isPaymentNEeded) const PaymentBlockerScreen(),
+        if (trialDue == null) OnboardingScreen(onClose: closeOnboarding),
+        if (trialDue != null && DateTimeUtil.isPast(trialDue!, DateTime.now()))
+          const PaymentBlockerScreen(),
       ],
     );
   }

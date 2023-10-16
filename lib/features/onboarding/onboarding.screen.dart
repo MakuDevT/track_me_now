@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/widgets/display/backdrop.widget.dart';
+import 'package:track_me_now/data/providers/payment.provider.dart';
 import 'package:track_me_now/features/onboarding/widgets/chat-content.widget.dart';
 import 'package:track_me_now/features/onboarding/widgets/intro-content.widget.dart';
 import 'package:track_me_now/features/onboarding/widgets/device-content.widget.dart';
@@ -7,16 +9,16 @@ import 'package:track_me_now/features/onboarding/widgets/map-content.widget.dart
 import 'package:track_me_now/features/onboarding/widgets/profile-content.widget.dart';
 import 'package:track_me_now/features/onboarding/widgets/trial-content.widget.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  final Function onClose;
+class OnboardingScreen extends ConsumerStatefulWidget {
+  final Function(DateTime) onClose;
 
   const OnboardingScreen({super.key, required this.onClose});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  OnboardingScreenState createState() => OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int page = 1;
 
   void setPage(int newPage) {
@@ -90,12 +92,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             },
                             child: const Text('Previous')),
                       ElevatedButton(
-                          onPressed: () {
-                            if (page < contents.length) {
-                              setPage(page + 1);
-                            } else {
-                              //TODO: Perform API call for start trial
-                              widget.onClose();
+                          onPressed: () async {
+                            try {
+                              if (page < contents.length) {
+                                setPage(page + 1);
+                              } else {
+                                var user = await ref
+                                    .read(paymentProvider.notifier)
+                                    .startTrial();
+                                print(">>>>>>>$user");
+                                widget.onClose(DateTime.parse(user.trialDue!));
+                              }
+                            } catch (err) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Failed to start trial. Close and reopen the app.',
+                                        style: TextStyle(color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      )));
                             }
                           },
                           child:

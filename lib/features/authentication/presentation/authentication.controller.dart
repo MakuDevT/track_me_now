@@ -50,10 +50,14 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<void> getUserInfo() async {
+  Future<Register> getUserInfo() async {
     state = const AsyncValue<void>.loading();
-    state =
-        await AsyncValue.guard<Register>(() => authRepository.getUserInfo());
+    String? token = await storage.getToken();
+    if (token != null) {
+      var user = await authRepository.getUserInfo(token);
+      return user;
+    }
+    throw Exception("No token");
   }
 
   Future<void> signOut() async {
@@ -67,8 +71,8 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
   }
 }
 
-final authenticationScreenControllerProvider = StateNotifierProvider
-    .autoDispose<AuthenticationController, AsyncValue<void>>((ref) {
+final authenticationScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthenticationController(authRepository: authRepository);
 });
