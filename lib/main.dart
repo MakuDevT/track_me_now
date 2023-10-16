@@ -65,6 +65,7 @@ GoRouter _router(WidgetRef ref) {
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const ProviderScope(child: MyApp()));
   bg.BackgroundGeolocation.registerHeadlessTask(headlessTask);
 }

@@ -8,7 +8,7 @@ import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
 import 'package:track_me_now/features/onboarding/onboarding.screen.dart';
 import 'package:track_me_now/features/payment/payment-blocker.screen.dart';
-import 'package:track_me_now/features/profile/profile-view.screen.dart';
+import 'package:track_me_now/features/profile/presentation/profile-view.screen.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});

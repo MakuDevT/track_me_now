@@ -3,23 +3,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:track_me_now/common/utils/api.util.dart';
+import 'package:track_me_now/data/models/register/register.model.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 
 class AuthRepository {
   final SecureStorageService storage = SecureStorageService();
   final Dio _dio = Dio();
+
   final String _baseUrl = ApiUtil.getBaseUrl(noSuffix: true);
 
   final _authState = InMemoryStore<AppUser?>(null);
   Stream<AppUser?> authStateChanges() => _authState.stream;
   AppUser? get currentUser => _authState.value;
 
-  Future<void> registerUser(String email, String password) async {
+  Future<Register> registerUser(Map<String, dynamic> body) async {
     try {
-      Response response = await _dio.post('$_baseUrl/api/auth/register', data: {
-        'email': email,
-        'password': password,
-      });
+      Response response =
+          await _dio.post('$_baseUrl/api/auth/register', data: body);
+      print("the heeeck ${response}");
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseData = response.data['data'];
         storage.saveToken(responseData['token']);
@@ -33,6 +34,18 @@ class AuthRepository {
           isSubscribed: responseData['isSubscribed'],
         );
       }
+      return Register.fromJson(response.data['data']);
+    } on DioException catch (err) {
+      throw err.message.toString();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<Register> getUserInfo() async {
+    try {
+      Response response = await _dio.post('$_baseUrl/api/user/information');
+      return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
       throw err.message.toString();
     } catch (e) {
@@ -48,8 +61,18 @@ class AuthRepository {
       });
       final Map<String, dynamic> responseData = response.data['data'];
       storage.saveToken(responseData['token']);
+    } on DioException catch (err) {
+      throw err.message.toString();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 
-      print('Registration Successful: ${response.data}');
+  Future<void> changePassword(Map<String, dynamic> body, String token) async {
+    try {
+      await _dio.patch('$_baseUrl/api/user/password',
+          data: body,
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
     } on DioException catch (err) {
       throw err.message.toString();
     } catch (e) {
