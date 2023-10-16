@@ -10,7 +10,6 @@ class PaymentNotifier extends StateNotifier {
       var user = await PaymentApiService().startTrial();
       return user;
     } catch (err) {
-      print(">>>>>>>>>$err");
       throw Exception("Failed to start trial");
     }
   }

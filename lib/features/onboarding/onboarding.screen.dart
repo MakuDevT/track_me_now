@@ -100,7 +100,6 @@ class OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                 var user = await ref
                                     .read(paymentProvider.notifier)
                                     .startTrial();
-                                print(">>>>>>>$user");
                                 widget.onClose(DateTime.parse(user.trialDue!));
                               }
                             } catch (err) {
