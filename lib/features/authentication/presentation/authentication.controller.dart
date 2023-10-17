@@ -9,6 +9,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       : super(const AsyncValue<void>.data(null));
   final AuthRepository authRepository;
   final SecureStorageService storage = SecureStorageService();
+  Register userData = const Register();
 
   Future<void> register(
       String email, String password, String confirmPassword) async {
@@ -50,14 +51,18 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<Register> getUserInfo() async {
+  Future<void> getUserInfo() async {
     state = const AsyncValue<void>.loading();
     String? token = await storage.getToken();
     if (token != null) {
-      var user = await authRepository.getUserInfo(token);
-      return user;
+      var user = await AsyncValue.guard<Register>(
+          () => authRepository.getUserInfo(token));
+      if (user.hasValue) {
+        user.whenData((value) => {userData = value});
+      }
+    } else {
+      throw Exception("No Token");
     }
-    throw Exception("No token");
   }
 
   Future<void> signOut() async {
