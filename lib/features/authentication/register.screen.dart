@@ -26,6 +26,10 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
       authenticationScreenControllerProvider,
       (previousState, state) async {
         if (state.hasValue) {
+          await ref.read(deviceListProvider.notifier).initialize();
+          await ref
+              .read(authenticationScreenControllerProvider.notifier)
+              .getUserInfo();
           context.goNamed('home');
         }
 

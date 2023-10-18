@@ -58,7 +58,10 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       var user = await AsyncValue.guard<Register>(
           () => authRepository.getUserInfo(token));
       if (user.hasValue) {
-        user.whenData((value) => {userData = value});
+        user.whenData((value) {
+          userData = value;
+          state = const AsyncValue<void>.data(null);
+        });
       }
     } else {
       throw Exception("No Token");
