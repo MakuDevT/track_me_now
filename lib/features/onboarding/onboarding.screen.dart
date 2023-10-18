@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/widgets/display/backdrop.widget.dart';
 import 'package:track_me_now/data/providers/payment.provider.dart';
+import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/onboarding/widgets/chat-content.widget.dart';
 import 'package:track_me_now/features/onboarding/widgets/intro-content.widget.dart';
 import 'package:track_me_now/features/onboarding/widgets/device-content.widget.dart';
@@ -10,9 +11,7 @@ import 'package:track_me_now/features/onboarding/widgets/profile-content.widget.
 import 'package:track_me_now/features/onboarding/widgets/trial-content.widget.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
-  final Function(DateTime) onClose;
-
-  const OnboardingScreen({super.key, required this.onClose});
+  const OnboardingScreen({super.key});
 
   @override
   OnboardingScreenState createState() => OnboardingScreenState();
@@ -100,7 +99,10 @@ class OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                 var user = await ref
                                     .read(paymentProvider.notifier)
                                     .startTrial();
-                                widget.onClose(DateTime.parse(user.trialDue!));
+                                await ref
+                                    .read(authenticationScreenControllerProvider
+                                        .notifier)
+                                    .getUserInfo();
                               }
                             } catch (err) {
                               ScaffoldMessenger.of(context)
