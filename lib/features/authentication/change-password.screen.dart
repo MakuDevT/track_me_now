@@ -42,10 +42,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
           Consumer(builder: (context, ref, child) {
             final state = ref.watch(authenticationScreenControllerProvider);
-            final user = ref
-                .watch(authenticationScreenControllerProvider.notifier)
-                .userData;
-          print("${user}@@@@@");
             ref.listen<AsyncValue<void>>(
               authenticationScreenControllerProvider,
               (previousState, state) async {

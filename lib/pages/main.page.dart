@@ -5,7 +5,10 @@ import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
+import 'package:track_me_now/data/services/local/secure-storage.service.dart';
+import 'package:track_me_now/features/authentication/data/authentication.repository.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
+import 'package:track_me_now/features/biometrics/presentation/biometrics.controller.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
 import 'package:track_me_now/features/map/map.screen.dart';
 import 'package:track_me_now/features/onboarding/onboarding.screen.dart';
@@ -20,6 +23,7 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class MainPageState extends ConsumerState<MainPage> {
+  final SecureStorageService storage = SecureStorageService();
   static const List<Widget> _widgetOptions = <Widget>[
     DeviceListScreen(),
     MapsScreen(),
@@ -34,10 +38,20 @@ class MainPageState extends ConsumerState<MainPage> {
     });
   }
 
+  Future<void> firstLoggedIn() async {
+    if (await storage.getIsFirstLoggedIn() == "true") {
+      ref
+          .read(biometricsScreenControllerProvider.notifier)
+          .authenticateWithBiometrics();
+    }
+
+    storage.saveIsFirstLoggedIn('true');
+  }
+
   @override
   void initState() {
+    firstLoggedIn();
     super.initState();
-
     bg.BackgroundGeolocation.onLocation((bg.Location location) {
       print('[location] - $location');
       postLocation(location.coords.latitude, location.coords.longitude);
