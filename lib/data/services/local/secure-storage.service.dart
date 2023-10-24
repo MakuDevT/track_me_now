@@ -24,4 +24,16 @@ class SecureStorageService extends FlutterSecureStorage {
   Future<void> clearDeviceId() async {
     return delete(key: 'deviceId');
   }
+
+  Future<void> saveIsFirstLoggedIn(String val) async {
+    return write(key: 'isFirstLoggedIn', value: val);
+  }
+
+  Future<String?> getIsFirstLoggedIn() {
+    return read(key: 'isFirstLoggedIn');
+  }
+
+  Future<void> clearIsFirstLoggedIn() async {
+    return delete(key: 'isFirstLoggedIn');
+  }
 }

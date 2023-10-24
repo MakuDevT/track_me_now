@@ -11,6 +11,13 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
   final SecureStorageService storage = SecureStorageService();
   Register userData = const Register();
 
+  Future<void> firstLoggedIn() async {
+    // state = const AsyncValue<void>.loading();
+    var isFirstLoggedIn = true;
+    storage.saveToken(isFirstLoggedIn.toString());
+    // state = const AsyncValue<void>.data(null);
+  }
+
   Future<void> register(
       String email, String password, String confirmPassword) async {
     state = const AsyncValue<void>.loading();
@@ -19,14 +26,17 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
           AsyncValue<void>.error("Password not matched", StackTrace.current);
       return;
     }
-    state = await AsyncValue.guard<Register>(() =>
-        authRepository.registerUser({'email': email, 'password': password}));
+    state = await AsyncValue.guard<Register>(() {
+      return authRepository
+          .registerUser({'email': email, 'password': password});
+    });
   }
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue<void>.loading();
-    state = await AsyncValue.guard<void>(
-        () => authRepository.loginUser(email, password));
+    state = await AsyncValue.guard<void>(() {
+      return authRepository.loginUser(email, password);
+    });
   }
 
   Future<void> changePassword(String currentPassword, String confirmNewPassword,
@@ -72,6 +82,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
     try {
       state = const AsyncValue<void>.loading();
       await authRepository.signOutUser();
+      storage.saveIsFirstLoggedIn('false');
       state = const AsyncValue<void>.data(null);
     } catch (e, stackTrace) {
       state = AsyncValue<void>.error(e, stackTrace);

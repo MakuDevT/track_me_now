@@ -6,6 +6,7 @@ import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 import 'package:track_me_now/features/authentication/login.screen.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/authentication/register.screen.dart';
+import 'package:track_me_now/features/biometrics/presentation/biometrics.controller.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
 import 'package:track_me_now/pages/main.page.dart';
@@ -40,9 +41,10 @@ GoRouter _router(WidgetRef ref) {
         redirect: (context, state) async {
           SecureStorageService storage = SecureStorageService();
           var token = await storage.getToken();
-
+        
           if (token != null) {
             await ref.read(deviceListProvider.notifier).initialize();
+
             await ref
                 .read(authenticationScreenControllerProvider.notifier)
                 .getUserInfo();
