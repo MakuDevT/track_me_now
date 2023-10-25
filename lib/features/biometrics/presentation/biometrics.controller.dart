@@ -22,10 +22,8 @@ class BiometricsController extends StateNotifier<AsyncValue<void>> {
   bool _isAuthenticating = false;
 
   Future<void> authenticateWithBiometrics() async {
-    print("pasok");
     bool authenticated = false;
     try {
-      print("try");
       _isAuthenticating = true;
       _authorized = 'Authenticating';
       authenticated = await auth.authenticate(
@@ -36,7 +34,6 @@ class BiometricsController extends StateNotifier<AsyncValue<void>> {
           biometricOnly: true,
         ),
       );
-      print("finish");
       _isAuthenticating = false;
       _authorized = 'Authenticating';
     } on PlatformException catch (e) {
@@ -49,14 +46,9 @@ class BiometricsController extends StateNotifier<AsyncValue<void>> {
     }
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
     _authorized = message;
-    print('${message} >>>>>>>>>>>>>');
     return;
   }
 
-  Future<void> _cancelAuthentication() async {
-    await auth.stopAuthentication();
-    () => _isAuthenticating = false;
-  }
 }
 
 final biometricsScreenControllerProvider =
