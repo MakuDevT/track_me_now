@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/widgets/display/backdrop.widget.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:track_me_now/features/payment/presentation/payment.controller.dart';
 
-class PaymentBlockerScreen extends StatelessWidget {
+class PaymentBlockerScreen extends ConsumerStatefulWidget {
   const PaymentBlockerScreen({super.key});
 
+  @override
+  PaymentBlockerScreenState createState() => PaymentBlockerScreenState();
+}
+
+class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
   @override
   Widget build(BuildContext context) {
     return Backdrop(
@@ -50,7 +58,69 @@ class PaymentBlockerScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          //TODO: Redirect to payment page
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => UsePaypal(
+                                  sandboxMode: true,
+                                  clientId:
+                                      "Ae1xRQh4G6n4LYoo5U0nkWehZHX8WdfEgI8QThHxgbSF_YpgSEKc-KVp6QRcOcuJdJj4oNevyBA24XlO",
+                                  secretKey:
+                                      "EHcK-tU0FEprCc7EnQTnTvhkcMR10m4cv4w7H5LlBKoOhGCq8L_7JxUgkjdLnZu1oJPQXwFhoVDrGyox",
+                                  returnURL: "https://samplesite.com/return",
+                                  cancelURL: "https://samplesite.com/cancel",
+                                  transactions: const [
+                                    {
+                                      "amount": {
+                                        "total": '500',
+                                        "currency": "PHP",
+                                        "details": {
+                                          "subtotal": '500',
+                                          "shipping": '0',
+                                          "shipping_discount": 0
+                                        }
+                                      },
+                                      "description":
+                                          "The payment transaction description.",
+                                      "item_list": {
+                                        "items": [
+                                          {
+                                            "name": "Track",
+                                            "quantity": 1,
+                                            "price": '500',
+                                            "currency": "PHP"
+                                          }
+                                        ],
+                                      }
+                                    }
+                                  ],
+                                  note:
+                                      "Contact us for any questions on your order.",
+                                  onSuccess: (Map params) async {
+                                    final Map<dynamic, dynamic> responseData =
+                                        params;
+                                    ref
+                                        .read(
+                                            paymentBlockScreenControllerProvider
+                                                .notifier)
+                                        .paypalPayment(
+                                            responseData['data']['id'],
+                                            500,
+                                            'success');
+                                    //TODO: Success Callback
+                                  },
+                                  onError: (error) {
+                                    ref
+                                        .read(
+                                            paymentBlockScreenControllerProvider
+                                                .notifier)
+                                        .paypalPayment('', 0, 'Error');
+                                    //TODO: Error Callback
+                                  },
+                                  onCancel: (params) {
+                                    //TODO: Cancel Callback
+                                  }),
+                            ),
+                          );
                         },
                         child: const Text('Pay Now'))),
               ],
