@@ -153,7 +153,9 @@ class MainPageState extends ConsumerState<MainPage> {
           ),
         ),
         if (user.trialDue == null) const OnboardingScreen(),
-        if (false) PaymentBlockerScreen(),
+        if (user.trialDue != null &&
+            DateTimeUtil.isPast(DateTime.parse(user.trialDue!), DateTime.now()))
+          const PaymentBlockerScreen(),
       ],
     );
   }

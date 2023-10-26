@@ -70,6 +70,31 @@ class AuthRepository {
     }
   }
 
+  Future<Register> updateTrial(String token) async {
+    try {
+      Response response = await _dio.patch('$_baseUrl/api/user/trial',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = response.data['data'];
+        _authState.value = AppUser(
+          token: responseData['token'],
+          email: responseData['email'],
+          uid: responseData['id'],
+          trialDue: responseData['trialDue'],
+          isActive: responseData['isActive'],
+          isAdmin: responseData['isAdmin'],
+          isSubscribed: responseData['isSubscribed'],
+        );
+      }
+
+      return Register.fromJson(response.data['data']);
+    } on DioException catch (err) {
+      throw err.message.toString();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   Future<void> loginUser(String email, String password) async {
     try {
       Response response = await _dio.post('$_baseUrl/api/auth/login', data: {

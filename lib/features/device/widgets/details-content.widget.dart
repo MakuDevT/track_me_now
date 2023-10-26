@@ -79,21 +79,6 @@ class _DeviceDetailsContentState extends ConsumerState<DeviceDetailsContent> {
                             color: Colors.blue[900]),
                         children: [
                           TextSpan(
-                              text: widget.device.id,
-                              style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w400,
-                              ))
-                        ]),
-                  ),
-                  RichText(
-                    text: TextSpan(
-                        text: "MAC Address: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue[900]),
-                        children: [
-                          TextSpan(
                               text: widget.device.macAddress,
                               style: const TextStyle(
                                 fontStyle: FontStyle.italic,

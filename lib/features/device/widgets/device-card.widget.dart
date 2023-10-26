@@ -44,7 +44,7 @@ class DeviceCard extends ConsumerWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                        text: "MAC Address: ",
+                        text: "Device ID: ",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.blue[900]),
