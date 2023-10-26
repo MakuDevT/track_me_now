@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/widgets/display/backdrop.widget.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
+import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/payment/presentation/payment.controller.dart';
 
 class PaymentBlockerScreen extends ConsumerStatefulWidget {
@@ -98,7 +99,7 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                   onSuccess: (Map params) async {
                                     final Map<dynamic, dynamic> responseData =
                                         params;
-                                    ref
+                                    await ref
                                         .read(
                                             paymentBlockScreenControllerProvider
                                                 .notifier)
@@ -106,7 +107,11 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                             responseData['data']['id'],
                                             500,
                                             'success');
-                                    //TODO: Success Callback
+                                    await ref
+                                        .read(
+                                            authenticationScreenControllerProvider
+                                                .notifier)
+                                        .updateTrial();
                                   },
                                   onError: (error) {
                                     ref
@@ -114,10 +119,18 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                             paymentBlockScreenControllerProvider
                                                 .notifier)
                                         .paypalPayment('', 0, 'Error');
-                                    //TODO: Error Callback
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.redAccent,
+                                            content: Text(
+                                                'Failed to perform transaction. Try again.')));
                                   },
                                   onCancel: (params) {
-                                    //TODO: Cancel Callback
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.redAccent,
+                                            content: Text(
+                                                'Transaction cancelled. Try again.')));
                                   }),
                             ),
                           );
