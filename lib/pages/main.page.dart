@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:track_me_now/common/utils/api.util.dart';
 import 'package:track_me_now/common/utils/datetime.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
@@ -106,7 +107,13 @@ class MainPageState extends ConsumerState<MainPage> {
     ref.watch(authenticationScreenControllerProvider);
     final user =
         ref.watch(authenticationScreenControllerProvider.notifier).userData;
-
+    ref.listen(biometricsScreenControllerProvider,
+        (previousState, state) async {
+      if (state.hasError) {
+        ref.read(authenticationScreenControllerProvider.notifier).signOut();
+        context.pushReplacementNamed('login');
+      }
+    });
     return Stack(
       children: [
         Scaffold(
@@ -146,7 +153,7 @@ class MainPageState extends ConsumerState<MainPage> {
           ),
         ),
         if (user.trialDue == null) const OnboardingScreen(),
-        if (true)  PaymentBlockerScreen(),
+        if (false) PaymentBlockerScreen(),
       ],
     );
   }
