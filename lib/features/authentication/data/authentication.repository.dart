@@ -20,7 +20,6 @@ class AuthRepository {
     try {
       Response response =
           await _dio.post('$_baseUrl/api/auth/register', data: body);
-      print("the heeeck ${response}");
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseData = response.data['data'];
         storage.saveToken(responseData['token']);
@@ -58,17 +57,16 @@ class AuthRepository {
           isSubscribed: responseData['isSubscribed'],
         );
       }
-      print("QQQQQ2 ${_authState.value}");
 
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      print("QQQQ6 $err");
       throw err.message.toString();
     } catch (e) {
-      print("QQQQ7 $e");
       throw e.toString();
     }
   }
+
+
 
   Future<Register> updateTrial(String token) async {
     try {
@@ -95,7 +93,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> loginUser(String email, String password) async {
+  Future<Register> loginUser(String email, String password) async {
     try {
       Response response = await _dio.post('$_baseUrl/api/auth/login', data: {
         'email': email,
@@ -116,6 +114,7 @@ class AuthRepository {
           isSubscribed: responseData['isSubscribed'],
         );
       }
+      return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
       throw err.message.toString();
     } catch (e) {
@@ -128,6 +127,19 @@ class AuthRepository {
       await _dio.patch('$_baseUrl/api/user/password',
           data: body,
           options: Options(headers: {'Authorization': 'Bearer $token'}));
+    } on DioException catch (err) {
+      throw err.message.toString();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    try {
+      await _dio.post(
+        '$_baseUrl/api/request/create',
+        data: {'email': email},
+      );
     } on DioException catch (err) {
       throw err.message.toString();
     } catch (e) {

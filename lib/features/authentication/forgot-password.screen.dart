@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 
-class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({super.key});
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  RegisterScreenState createState() => RegisterScreenState();
+  ForgotPasswordScreenState createState() => ForgotPasswordScreenState();
 }
 
-class RegisterScreenState extends ConsumerState<RegisterScreen> {
+class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -21,22 +19,19 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(
     BuildContext context,
   ) {
-    final state = ref.watch(registerScreenControllerProvider);
+    final state = ref.watch(forgotPasswordScreenControllerProvider);
     ref.listen<AsyncValue<void>>(
-      registerScreenControllerProvider,
+      forgotPasswordScreenControllerProvider,
       (previousState, state) async {
-        if (state.hasValue) {
-          await ref.read(deviceListProvider.notifier).initialize();
-          await ref
-              .read(authenticationScreenControllerProvider.notifier)
-              .getUserInfo();
-          context.goNamed('home');
-        }
-
         if (state.hasError && !state.isLoading) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Colors.redAccent,
               content: Text(state.error.toString())));
+        }
+        if (state.asData != null) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('The link has been sent to your email')));
         }
       },
     );
@@ -48,35 +43,23 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("SignUp"),
+            const Text("Forgot Password"),
             TextField(
               controller: emailController,
               onChanged: (string) => {},
               decoration: const InputDecoration(labelText: 'Email Address'),
-            ),
-            TextField(
-              controller: passwordController,
-              onChanged: (string) => {},
-              decoration: const InputDecoration(labelText: 'Password'),
-            ),
-            TextField(
-              controller: confirmPasswordController,
-              onChanged: (string) => {},
-              decoration: const InputDecoration(labelText: 'Confirm Password'),
             ),
             state.isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () {
                       final String email = emailController.text;
-                      final String password = passwordController.text;
-                      final String confirmPassword =
-                          confirmPasswordController.text;
+                      confirmPasswordController.text;
                       ref
-                          .read(registerScreenControllerProvider.notifier)
-                          .register(email, password, confirmPassword);
+                          .read(forgotPasswordScreenControllerProvider.notifier)
+                          .forgotPassword(email);
                     },
-                    child: const Text('Register'),
+                    child: const Text('Forgot Password'),
                   ),
           ],
         ),
