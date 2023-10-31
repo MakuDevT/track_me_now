@@ -17,8 +17,11 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 GoRouter _router(WidgetRef ref) {
   return GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: '/login',
     routes: [
       GoRoute(
@@ -45,11 +48,13 @@ GoRouter _router(WidgetRef ref) {
           var token = await storage.getToken();
 
           if (token != null) {
-            await ref.read(deviceListProvider.notifier).initialize();
-
-            await ref
+            var success = await ref
                 .read(authenticationScreenControllerProvider.notifier)
                 .getUserInfo();
+            if (!success) {
+              return null;
+            }
+            await ref.read(deviceListProvider.notifier).initialize();
             return '/';
           }
           return null;

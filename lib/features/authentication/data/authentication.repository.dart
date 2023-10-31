@@ -60,7 +60,7 @@ class AuthRepository {
 
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err;
     } catch (e) {
       throw e.toString();
     }

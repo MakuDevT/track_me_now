@@ -154,7 +154,25 @@ class _DeviceDetailsContentState extends ConsumerState<DeviceDetailsContent> {
                         onClick: () =>
                             trackHandler(widget.device.tracks![index]),
                         isActive: activeTrack?.dateCreated ==
-                            widget.device.tracks![index].dateCreated)))
+                            widget.device.tracks![index].dateCreated))),
+          if (widget.device.tracks == null)
+            Expanded(
+                child: Center(
+                    child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_pin,
+                  size: 40,
+                  color: Colors.amber[900],
+                ),
+                const Text(
+                  'No tracks',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ],
+            )))
         ],
       ),
     );

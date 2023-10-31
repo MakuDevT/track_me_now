@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/data/models/register/register.model.dart';
 import 'package:track_me_now/features/authentication/change-password.screen.dart';
@@ -100,12 +101,15 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
         () => authRepository.resetPassword(id, password));
   }
 
-  Future<void> getUserInfo() async {
+  Future<bool> getUserInfo() async {
     state = const AsyncValue<void>.loading();
     String? token = await storage.getToken();
     if (token != null) {
       var user = await AsyncValue.guard<Register>(
           () => authRepository.getUserInfo(token));
+      if (user.error is DioException) {
+        return false;
+      }
       if (user.hasValue) {
         user.whenData((value) {
           userData = value;
@@ -116,6 +120,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       state = AsyncValue<void>.error('No Token', StackTrace.current);
       throw Exception("No Token");
     }
+    return true;
   }
 
   Future<void> updateTrial() async {
@@ -136,7 +141,6 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<void> signOut() async {
-    print(">>>sg");
     try {
       state = const AsyncValue<void>.loading();
       await authRepository.signOutUser();
