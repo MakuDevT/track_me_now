@@ -87,9 +87,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       state = AsyncValue<void>.error("ID is empty", StackTrace.current);
       return;
     } else if (password.isEmpty || confirmPassword.isEmpty) {
-      state = AsyncValue<void>.error(
-          "fields are empty",
-          StackTrace.current);
+      state = AsyncValue<void>.error("fields are empty", StackTrace.current);
       return;
     } else if (password != confirmPassword) {
       state = AsyncValue<void>.error(

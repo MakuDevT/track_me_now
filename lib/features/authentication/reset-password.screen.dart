@@ -62,7 +62,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             confirmNewPasswordController.text;
                         ref
                             .read(
-                                authenticationScreenControllerProvider.notifier)
+                                resetPasswordScreenControllerProvider.notifier)
                             .resetPassword(widget.requestId ?? "", newPassword,
                                 confirmNewPassword);
                       },

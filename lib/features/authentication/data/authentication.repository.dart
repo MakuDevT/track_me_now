@@ -147,7 +147,7 @@ class AuthRepository {
 
   Future<void> resetPassword(String id, String password) async {
     try {
-      await _dio.post(
+      await _dio.patch(
         '$_baseUrl/api/request/nominate',
         data: {'id': id, 'password': password},
       );
