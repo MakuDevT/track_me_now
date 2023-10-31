@@ -66,8 +66,6 @@ class AuthRepository {
     }
   }
 
-
-
   Future<Register> updateTrial(String token) async {
     try {
       Response response = await _dio.patch('$_baseUrl/api/user/trial',
@@ -139,6 +137,19 @@ class AuthRepository {
       await _dio.post(
         '$_baseUrl/api/request/create',
         data: {'email': email},
+      );
+    } on DioException catch (err) {
+      throw err.message.toString();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<void> resetPassword(String id, String password) async {
+    try {
+      await _dio.post(
+        '$_baseUrl/api/request/nominate',
+        data: {'id': id, 'password': password},
       );
     } on DioException catch (err) {
       throw err.message.toString();

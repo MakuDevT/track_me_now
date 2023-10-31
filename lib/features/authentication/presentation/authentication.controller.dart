@@ -76,9 +76,30 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       state = AsyncValue<void>.error("Email is Empty", StackTrace.current);
       return;
     }
-        state = const AsyncValue<void>.loading();
+    state = const AsyncValue<void>.loading();
     state = await AsyncValue.guard<void>(
         () => authRepository.forgotPassword(email));
+  }
+
+  Future<void> resetPassword(
+      String id, String password, String confirmPassword) async {
+    if (id == "") {
+      state = AsyncValue<void>.error("ID is empty", StackTrace.current);
+      return;
+    } else if (password.isEmpty || confirmPassword.isEmpty) {
+      state = AsyncValue<void>.error(
+          "fields are empty",
+          StackTrace.current);
+      return;
+    } else if (password != confirmPassword) {
+      state = AsyncValue<void>.error(
+          "New password and confirm password doesn't match",
+          StackTrace.current);
+      return;
+    }
+    state = const AsyncValue<void>.loading();
+    state = await AsyncValue.guard<void>(
+        () => authRepository.resetPassword(id, password));
   }
 
   Future<void> getUserInfo() async {
@@ -148,6 +169,12 @@ final registerScreenControllerProvider =
 });
 
 final loginScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthenticationController(authRepository: authRepository);
+});
+
+final resetPasswordScreenControllerProvider =
     StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthenticationController(authRepository: authRepository);
