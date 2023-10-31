@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/common/utils/tracker.util.dart';
 import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
+import 'package:track_me_now/features/authentication/forgot-password.screen.dart';
 import 'package:track_me_now/features/authentication/login.screen.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/authentication/register.screen.dart';
+import 'package:track_me_now/features/authentication/reset-password.screen.dart';
 import 'package:track_me_now/features/biometrics/presentation/biometrics.controller.dart';
 import 'package:track_me_now/pages/chat.page.dart';
 import 'package:track_me_now/pages/device-details.page.dart';
@@ -41,7 +43,7 @@ GoRouter _router(WidgetRef ref) {
         redirect: (context, state) async {
           SecureStorageService storage = SecureStorageService();
           var token = await storage.getToken();
-        
+
           if (token != null) {
             await ref.read(deviceListProvider.notifier).initialize();
 
@@ -64,6 +66,20 @@ GoRouter _router(WidgetRef ref) {
               key: state.pageKey,
               fullscreenDialog: true,
               child: RegisterScreen())),
+      GoRoute(
+          path: '/password-reset/:requestid',
+          name: 'passwordReset',
+          pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              fullscreenDialog: true,
+              child: ResetPasswordScreen())),
+      GoRoute(
+          path: '/forgot-password',
+          name: 'forgotPassword',
+          pageBuilder: (context, state) => MaterialPage(
+              key: state.pageKey,
+              fullscreenDialog: true,
+              child: ForgotPasswordScreen())),
     ],
   );
 }

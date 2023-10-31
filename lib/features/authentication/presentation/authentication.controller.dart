@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:track_me_now/data/models/register/register.model.dart';
+import 'package:track_me_now/features/authentication/change-password.screen.dart';
 import 'package:track_me_now/features/authentication/data/authentication.repository.dart';
 
 import '../../../data/services/local/secure-storage.service.dart';
@@ -34,9 +35,18 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue<void>.loading();
-    state = await AsyncValue.guard<void>(() {
-      return authRepository.loginUser(email, password);
-    });
+
+    var user = await AsyncValue.guard<Register>(
+        () => authRepository.loginUser(email, password));
+    if (user.hasValue) {
+      user.whenData((value) {
+        userData = value;
+        state = const AsyncValue<void>.data(null);
+      });
+    } else {
+      state = AsyncValue<void>.error('No Token', StackTrace.current);
+      throw Exception("No Token");
+    }
   }
 
   Future<void> changePassword(String currentPassword, String confirmNewPassword,
@@ -61,6 +71,16 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
     }
   }
 
+  Future<void> forgotPassword(String email) async {
+    if (email.isEmpty) {
+      state = AsyncValue<void>.error("Email is Empty", StackTrace.current);
+      return;
+    }
+        state = const AsyncValue<void>.loading();
+    state = await AsyncValue.guard<void>(
+        () => authRepository.forgotPassword(email));
+  }
+
   Future<void> getUserInfo() async {
     state = const AsyncValue<void>.loading();
     String? token = await storage.getToken();
@@ -74,6 +94,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
         });
       }
     } else {
+      state = AsyncValue<void>.error('No Token', StackTrace.current);
       throw Exception("No Token");
     }
   }
@@ -96,6 +117,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
   }
 
   Future<void> signOut() async {
+    print(">>>sg");
     try {
       state = const AsyncValue<void>.loading();
       await authRepository.signOutUser();
@@ -108,6 +130,24 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
 }
 
 final authenticationScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthenticationController(authRepository: authRepository);
+});
+
+final forgotPasswordScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthenticationController(authRepository: authRepository);
+});
+
+final registerScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthenticationController(authRepository: authRepository);
+});
+
+final loginScreenControllerProvider =
     StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthenticationController(authRepository: authRepository);

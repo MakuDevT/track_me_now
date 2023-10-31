@@ -9,6 +9,15 @@
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyB8WUe83Z229hdernamqUTL-OtOfnBjrhk"/>
+           <!-- Deep linking -->
+<meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+  <intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+  <data android:scheme="http" android:host="trackmenow.ph" />
+  <data android:scheme="https" />
+</intent-filter>
         <activity
             android:name=".MainActivity"
             android:exported="true"

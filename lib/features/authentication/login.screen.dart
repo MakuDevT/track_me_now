@@ -19,16 +19,13 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(
     BuildContext context,
   ) {
-    final state = ref.watch(authenticationScreenControllerProvider);
+    final state = ref.watch(loginScreenControllerProvider);
 
     ref.listen<AsyncValue<void>>(
-      authenticationScreenControllerProvider,
+      loginScreenControllerProvider,
       (previousState, state) async {
         if (state.hasValue) {
           await ref.read(deviceListProvider.notifier).initialize();
-          await ref
-              .read(authenticationScreenControllerProvider.notifier)
-              .getUserInfo();
           context.goNamed('home');
         }
 
@@ -62,6 +59,12 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               onTap: () => {context.pushNamed('register')},
               child: Text("register account"),
             ),
+            GestureDetector(
+              onTap: () => {context.pushNamed('forgotPassword')},
+              child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Text("forgot password")),
+            ),
             state.isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
@@ -69,7 +72,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       final String email = emailController.text;
                       final String password = passwordController.text;
                       ref
-                          .read(authenticationScreenControllerProvider.notifier)
+                          .read(loginScreenControllerProvider.notifier)
                           .login(email, password);
                     },
                     child: const Text('login'),
