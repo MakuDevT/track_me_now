@@ -72,7 +72,9 @@ GoRouter _router(WidgetRef ref) {
           pageBuilder: (context, state) => MaterialPage(
               key: state.pageKey,
               fullscreenDialog: true,
-              child: ResetPasswordScreen())),
+              child: ResetPasswordScreen(
+                requestId: state.pathParameters['requestid'],
+              ))),
       GoRoute(
           path: '/forgot-password',
           name: 'forgotPassword',
