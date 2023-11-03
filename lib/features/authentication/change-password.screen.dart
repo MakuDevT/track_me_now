@@ -31,7 +31,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.51,
+        height: MediaQuery.of(context).size.height * 0.535,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

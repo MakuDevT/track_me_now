@@ -53,7 +53,7 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
