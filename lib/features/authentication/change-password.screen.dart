@@ -16,6 +16,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmNewPasswordController =
       TextEditingController();
+  bool _passwordVisible = true;
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,17 +48,32 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   TextField(
                     controller: currentPasswordController,
                     onChanged: (string) => {},
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Current Password',
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -61,17 +83,32 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   TextField(
                     controller: newPasswordController,
                     onChanged: (string) => {},
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'New Password',
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -81,17 +118,32 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   TextField(
                     controller: confirmNewPasswordController,
                     onChanged: (string) => {},
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Confirm New Password',
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.blueAccent,
                         ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -120,12 +172,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               return state.isLoading
                   ? const CircularProgressIndicator()
                   : Container(
-                      margin: const EdgeInsets.only(
-                           left: 30, right: 30),
+                      margin: const EdgeInsets.only(left: 30, right: 30),
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder()),
+                            shape: const RoundedRectangleBorder()),
                         onPressed: () {
                           final String currentPassword =
                               currentPasswordController.text;

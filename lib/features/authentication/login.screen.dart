@@ -129,7 +129,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               state.isLoading
                   ? Container(
-                      margin: EdgeInsets.only(bottom: 30),
+                      margin: const EdgeInsets.only(bottom: 30),
                       child: const CircularProgressIndicator())
                   : Container(
                       margin: const EdgeInsets.only(
@@ -137,7 +137,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder()),
+                            shape: const RoundedRectangleBorder()),
                         onPressed: () {
                           final String email = emailController.text;
                           final String password = passwordController.text;
@@ -170,7 +170,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
               const SizedBox(
                 height: 60,
               ),
-              Text(
+              const Text(
                 "Developed by ChnChn, ET AL",
               ),
             ],
