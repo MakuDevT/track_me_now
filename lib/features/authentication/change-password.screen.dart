@@ -16,11 +16,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmNewPasswordController =
       TextEditingController();
+
   bool _passwordVisible = true;
+  bool _passwordVisible2 = true;
   @override
   void initState() {
     super.initState();
-    _passwordVisible = true;
+
+    bool _passwordVisible = true;
+    bool _passwordVisible2 = true;
   }
 
   @override
@@ -133,7 +137,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       suffixIcon: IconButton(
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
-                          _passwordVisible
+                          _passwordVisible2
                               ? Icons.visibility_off
                               : Icons.visibility,
                           color: Theme.of(context).primaryColorDark,
@@ -141,7 +145,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         onPressed: () {
                           // Update the state i.e. toogle the state of passwordVisible variable
                           setState(() {
-                            _passwordVisible = !_passwordVisible;
+                            _passwordVisible2 = !_passwordVisible2;
                           });
                         },
                       ),

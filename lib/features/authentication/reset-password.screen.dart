@@ -18,6 +18,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController confirmNewPasswordController =
       TextEditingController();
   @override
+  bool _passwordVisible = true;
+  bool _passwordVisible2 = true;
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = true;
+    _passwordVisible2 = true;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -43,17 +52,32 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     TextField(
                       controller: newPasswordController,
                       onChanged: (string) => {},
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'New Password',
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.blueAccent,
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.blueAccent,
                           ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            _passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -63,17 +87,32 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     TextField(
                       controller: confirmNewPasswordController,
                       onChanged: (string) => {},
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Confirm New Password',
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.blueAccent,
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.blueAccent,
                           ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            // Based on passwordVisible state choose the icon
+                            _passwordVisible2
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              _passwordVisible2 = !_passwordVisible2;
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -106,7 +145,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             bottom: 30, left: 30, right: 30),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder()),
+                              shape: const RoundedRectangleBorder()),
                           onPressed: () {
                             final String newPassword =
                                 newPasswordController.text;
