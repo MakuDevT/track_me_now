@@ -74,6 +74,11 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
           "New Password not matched", StackTrace.current);
       return;
     }
+    if (currentPassword.isEmpty || confirmNewPassword.isEmpty || newPassword.isEmpty) {
+      state = AsyncValue<void>.error(
+          'Some Fields Are Empty', StackTrace.current);
+      return;
+    }
     String? token = await storage.getToken();
     if (token != null) {
       state = await AsyncValue.guard<void>(() => authRepository.changePassword({
