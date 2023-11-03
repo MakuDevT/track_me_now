@@ -28,6 +28,11 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
           AsyncValue<void>.error("Password not matched", StackTrace.current);
       return;
     }
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      state = AsyncValue<void>.error(
+          'Email address or Password is empty', StackTrace.current);
+      return;
+    }
     state = await AsyncValue.guard<Register>(() {
       return authRepository
           .registerUser({'email': email, 'password': password});
@@ -36,17 +41,28 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue<void>.loading();
-
+    if (email.isEmpty || password.isEmpty) {
+      state = AsyncValue<void>.error(
+          'Email address or Password is empty', StackTrace.current);
+      return;
+    }
     var user = await AsyncValue.guard<Register>(
         () => authRepository.loginUser(email, password));
+
     if (user.hasValue) {
       user.whenData((value) {
         userData = value;
         state = const AsyncValue<void>.data(null);
       });
-    } else {
-      state = AsyncValue<void>.error('No Token', StackTrace.current);
-      throw Exception("No Token");
+      return;
+    }
+
+    if (user.hasError) {
+      if (user.error == '400' || user.error == '403') {
+        state = AsyncValue<void>.error(
+            'Invalid Email or Password', StackTrace.current);
+        return;
+      }
     }
   }
 
@@ -118,6 +134,7 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
       }
     } else {
       state = AsyncValue<void>.error('No Token', StackTrace.current);
+
       throw Exception("No Token");
     }
     return true;
