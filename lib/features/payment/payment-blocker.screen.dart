@@ -72,10 +72,10 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                   transactions: const [
                                     {
                                       "amount": {
-                                        "total": '500',
+                                        "total": '100',
                                         "currency": "PHP",
                                         "details": {
-                                          "subtotal": '500',
+                                          "subtotal": '100',
                                           "shipping": '0',
                                           "shipping_discount": 0
                                         }
@@ -87,7 +87,7 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                           {
                                             "name": "Track",
                                             "quantity": 1,
-                                            "price": '500',
+                                            "price": '100',
                                             "currency": "PHP"
                                           }
                                         ],
@@ -105,7 +105,7 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                                 .notifier)
                                         .paypalPayment(
                                             responseData['data']['id'],
-                                            500,
+                                            100,
                                             'success');
                                     await ref
                                         .read(

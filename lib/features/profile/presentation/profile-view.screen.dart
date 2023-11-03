@@ -20,14 +20,26 @@ class ProfileViewScreenState extends ConsumerState<ProfileViewScreen> {
       child: Column(
         children: [
           ChangePasswordScreen(),
-          ElevatedButton(
-            onPressed: () {
-              ref
-                  .read(authenticationScreenControllerProvider.notifier)
-                  .signOut();
-              context.pushReplacementNamed('login');
-            },
-            child: const Text('Logout'),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: const Divider(
+              height: 20,
+              color: Colors.blueAccent,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 30, left: 30, right: 30),
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder()),
+              onPressed: () {
+                ref
+                    .read(authenticationScreenControllerProvider.notifier)
+                    .signOut();
+                context.pushReplacementNamed('login');
+              },
+              child: const Text('Logout'),
+            ),
           ),
         ],
       ),
