@@ -27,12 +27,12 @@ void headlessTask(bg.HeadlessEvent headlessEvent) async {
       break;
     case bg.Event.HEARTBEAT:
       try {
-        bg.Location location =
-            await bg.BackgroundGeolocation.getCurrentPosition(
-                samples: 2,
-                timeout: 10,
-                extras: {"event": "heartbeat", "headless": true});
-        print('[getCurrentPosition] Headless: $location');
+        // bg.Location location =
+        //     await bg.BackgroundGeolocation.getCurrentPosition(
+        //         samples: 2,
+        //         timeout: 10,
+        //         extras: {"event": "heartbeat", "headless": true});
+        // print('[getCurrentPosition] Headless: $location');
       } catch (error) {
         print('[getCurrentPosition] Headless ERROR: $error');
       }

@@ -1,6 +1,8 @@
 import "package:dio/dio.dart";
+import "package:go_router/go_router.dart";
 import "package:track_me_now/common/utils/api.util.dart";
 import "package:track_me_now/data/services/local/secure-storage.service.dart";
+import "package:track_me_now/main.dart";
 
 class BaseApiService {
   final SecureStorageService _secureStorageService = SecureStorageService();
@@ -20,7 +22,6 @@ class BaseApiService {
         InterceptorsWrapper(
           onRequest: (options, handler) async {
             var token = await _secureStorageService.getToken();
-            //TODO: Reneable this commented logic once login is implemented
             if (token != null) {
               options.headers['Authorization'] = 'Bearer $token';
             }
@@ -29,28 +30,18 @@ class BaseApiService {
           onResponse: (response, handler) {
             return handler.next(response);
           },
-          // onError: (error, handler) {
-          //   Future.delayed(Duration.zero, () {
-          //     showDialog(
-          //       context: Globals.navigatorKey.currentContext!,
-          //       builder: (BuildContext context) {
-          //         return AlertDialog(
-          //           title: const Text('API Call'),
-          //           content:
-          //               const Text('Error occurred during API call execution.'),
-          //           actions: <Widget>[
-          //             TextButton(
-          //               child: const Text('Close'),
-          //               onPressed: () {},
-          //             ),
-          //           ],
-          //         );
-          //       },
-          //     );
-          //   });
-
-          //   return handler.next(error);
-          // },
+          onError: (error, handler) {
+            if (error.response?.statusCode == 403) {
+              if (navigatorKey.currentContext != null) {
+                SecureStorageService storage = SecureStorageService();
+                storage.clearIsFirstLoggedIn();
+                storage.clearDeviceId();
+                storage.clearToken();
+                GoRouter.of(navigatorKey.currentContext!).pushNamed('login');
+              }
+            }
+            return handler.next(error);
+          },
         ),
       );
   }

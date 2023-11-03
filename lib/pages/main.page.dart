@@ -58,13 +58,13 @@ class MainPageState extends ConsumerState<MainPage> {
       postLocation(location.coords.latitude, location.coords.longitude);
     });
 
-    bg.BackgroundGeolocation.onHeartbeat((event) {
-      print('[Heartbeat]');
-      bg.BackgroundGeolocation.getCurrentPosition(
-        samples: 1,
-        persist: true,
-      );
-    });
+    // bg.BackgroundGeolocation.onHeartbeat((event) {
+    //   print('[Heartbeat]');
+    //   bg.BackgroundGeolocation.getCurrentPosition(
+    //     samples: 1,
+    //     persist: true,
+    //   );
+    // });
 
     bg.BackgroundGeolocation.onMotionChange((bg.Location location) {
       print('[motionchange] - $location');
@@ -78,7 +78,7 @@ class MainPageState extends ConsumerState<MainPage> {
         desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
         locationUpdateInterval: 1000,
         //TODO: Reduce this to 1hr
-        heartbeatInterval: 60,
+        // heartbeatInterval: 60,
         fastestLocationUpdateInterval: 60,
         distanceFilter: 0,
         preventSuspend: true,
@@ -99,7 +99,7 @@ class MainPageState extends ConsumerState<MainPage> {
   }
 
   void postLocation(double lat, double lng) async {
-    // ref.read(deviceListProvider.notifier).updateLocation(lat, lng);
+    ref.read(deviceListProvider.notifier).updateLocation(lat, lng);
   }
 
   @override
