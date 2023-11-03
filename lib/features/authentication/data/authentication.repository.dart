@@ -114,7 +114,7 @@ class AuthRepository {
       }
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.statusCode.toString() ?? "Cannot Fetch From Backend";
     } catch (e) {
       throw e.toString();
     }
