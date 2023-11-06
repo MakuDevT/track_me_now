@@ -7,7 +7,6 @@ import 'package:track_me_now/data/providers/device-list.provider.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
-import 'package:track_me_now/features/authentication/data/authentication.repository.dart';
 import 'package:track_me_now/features/authentication/presentation/authentication.controller.dart';
 import 'package:track_me_now/features/biometrics/presentation/biometrics.controller.dart';
 import 'package:track_me_now/features/device/device-list.screen.dart';
@@ -77,8 +76,7 @@ class MainPageState extends ConsumerState<MainPage> {
     bg.BackgroundGeolocation.ready(bg.Config(
         desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
         locationUpdateInterval: 1000,
-        //TODO: Reduce this to 1hr
-        // heartbeatInterval: 60,
+        // heartbeatInterval: 3600,
         fastestLocationUpdateInterval: 60,
         distanceFilter: 0,
         preventSuspend: true,
@@ -117,13 +115,15 @@ class MainPageState extends ConsumerState<MainPage> {
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: Colors.indigo[100],
           appBar: AppBar(
               actions: [
-                IconButton(
-                    onPressed: () {
-                      ref.read(deviceListProvider.notifier).refetch();
-                    },
-                    icon: const Icon(Icons.refresh))
+                if (_selectedIndex != 2)
+                  IconButton(
+                      onPressed: () {
+                        ref.read(deviceListProvider.notifier).refetch();
+                      },
+                      icon: const Icon(Icons.refresh))
               ],
               title: const Text('Track Me Now'),
               elevation: 2,
@@ -132,7 +132,7 @@ class MainPageState extends ConsumerState<MainPage> {
           body: _widgetOptions.elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.blue[900],
-            unselectedItemColor: Colors.white,
+            unselectedItemColor: Colors.blueGrey[300],
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.devices),
@@ -148,13 +148,15 @@ class MainPageState extends ConsumerState<MainPage> {
               ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.white,
             onTap: _onItemTapped,
           ),
         ),
         if (user.trialDue == null) const OnboardingScreen(),
-        if (user.trialDue != null &&
-            DateTimeUtil.isPast(DateTime.parse(user.trialDue!), DateTime.now()))
+        if (!(user.isSubscribed ?? false) &&
+            (user.trialDue != null &&
+                DateTimeUtil.isPast(
+                    DateTime.parse(user.trialDue!), DateTime.now())))
           const PaymentBlockerScreen(),
       ],
     );

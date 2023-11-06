@@ -49,80 +49,58 @@ class _DeviceDetailsContentState extends ConsumerState<DeviceDetailsContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Device Information',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.phone_android,
-                size: 72,
-                color: Colors.blue[800],
-                shadows: [
-                  Shadow(
-                      blurRadius: 1,
-                      color: Colors.amber[800]!,
-                      offset: const Offset(2, 2))
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                        text: "Device ID: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue[900]),
-                        children: [
-                          TextSpan(
-                              text: widget.device.macAddress,
-                              style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w400,
-                              ))
-                        ]),
-                  ),
-                  RichText(
-                    text: TextSpan(
-                        text: "Device Model: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue[900]),
-                        children: [
-                          TextSpan(
-                              text: widget.device.model,
-                              style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w400,
-                              ))
-                        ]),
-                  ),
-                  if (widget.device.tracks != null &&
-                      widget.device.tracks!.isNotEmpty)
-                    RichText(
-                      text: TextSpan(
-                          text: "Last Date Tracked: ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue[900]),
-                          children: [
-                            TextSpan(
-                                text: DateTimeUtil.formatDateTime(
-                                    widget.device.tracks![0].dateCreated),
-                                style: const TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400,
-                                ))
-                          ]),
+          Row(children: [
+            Expanded(
+                flex: 3,
+                child: Image.asset(
+                  'assets/images/phone.png',
+                  scale: 2,
+                )),
+            const SizedBox(width: 8),
+            Expanded(
+                flex: 10,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.device.model,
+                      style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700),
                     ),
-                ],
-              ),
-            ],
-          ),
+                    Text(
+                      widget.device.macAddress,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey[800]),
+                    ),
+                    if (widget.device.tracks != null &&
+                        widget.device.tracks!.isNotEmpty)
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.share_location_rounded,
+                            size: 14,
+                            color: Colors.blue[900],
+                          ),
+                          const SizedBox(width: 3),
+                          Text(
+                            DateTimeUtil.formatDateTime(
+                                widget.device.tracks![0].dateCreated),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.grey[800]),
+                          ),
+                        ],
+                      ),
+                  ],
+                )),
+          ]),
           const SizedBox(height: 12),
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
@@ -139,7 +117,7 @@ class _DeviceDetailsContentState extends ConsumerState<DeviceDetailsContent> {
                   },
                 )),
           ),
-          const Divider(),
+          const Divider(color: Colors.white),
           const Text(
             'Track History',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -162,10 +140,9 @@ class _DeviceDetailsContentState extends ConsumerState<DeviceDetailsContent> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.location_pin,
-                  size: 40,
-                  color: Colors.amber[900],
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 96,
                 ),
                 const Text(
                   'No tracks',

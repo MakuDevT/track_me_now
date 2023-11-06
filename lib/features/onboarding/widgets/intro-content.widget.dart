@@ -6,15 +6,15 @@ class IntroContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      const FlutterLogo(size: 48),
+      Image.asset('assets/images/logo.png', height: 72),
       const SizedBox(height: 12),
       const Text('Track Me Now',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
-      const Text('Tagline...',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              fontStyle: FontStyle.italic)),
+      // const Text('Tagline...',
+      //     style: TextStyle(
+      //         fontSize: 16,
+      //         fontWeight: FontWeight.w500,
+      //         fontStyle: FontStyle.italic)),
       const SizedBox(height: 24),
       RichText(
           textAlign: TextAlign.center,

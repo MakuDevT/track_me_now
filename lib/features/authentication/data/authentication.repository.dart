@@ -35,7 +35,7 @@ class AuthRepository {
       }
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }
@@ -60,7 +60,7 @@ class AuthRepository {
 
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      throw err;
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }
@@ -85,7 +85,7 @@ class AuthRepository {
 
       return Register.fromJson(response.data['data']);
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }
@@ -98,10 +98,9 @@ class AuthRepository {
         'password': password,
       });
       final Map<String, dynamic> responseData = response.data['data'];
-      storage.saveToken(responseData['token']);
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseData = response.data['data'];
-        storage.saveToken(responseData['token']);
+        await storage.saveToken(responseData['token']);
         _authState.value = AppUser(
           token: responseData['token'],
           email: responseData['email'],
@@ -126,7 +125,7 @@ class AuthRepository {
           data: body,
           options: Options(headers: {'Authorization': 'Bearer $token'}));
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }
@@ -139,7 +138,7 @@ class AuthRepository {
         data: {'email': email},
       );
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }
@@ -152,7 +151,7 @@ class AuthRepository {
         data: {'id': id, 'password': password},
       );
     } on DioException catch (err) {
-      throw err.message.toString();
+      throw err.response?.data['message'] ?? 'Error occurred.';
     } catch (e) {
       throw e.toString();
     }

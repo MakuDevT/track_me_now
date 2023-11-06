@@ -40,7 +40,7 @@ class OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Backdrop(
-      color: Colors.blueAccent.withOpacity(.9),
+      color: Colors.indigoAccent.withOpacity(.9),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(48),

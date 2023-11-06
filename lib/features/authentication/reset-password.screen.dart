@@ -29,17 +29,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      backgroundColor: Colors.indigo[100],
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.55,
+          // height: MediaQuery.of(context).size.height * 0.55,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.10,
+                height: MediaQuery.of(context).size.height * 0.20,
               ),
+              Image.asset('assets/images/logo.png', height: 72),
               const Text(
-                "Change Password",
+                "Reset Password",
                 style: TextStyle(fontSize: 32),
               ),
               const SizedBox(
@@ -50,12 +54,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 child: Column(
                   children: [
                     TextField(
+                      obscureText: _passwordVisible,
                       controller: newPasswordController,
                       onChanged: (string) => {},
                       decoration: InputDecoration(
                         labelText: 'New Password',
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
+                        isDense: true,
+                        filled: true,
+                        fillColor: Theme.of(context).cardColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
                             color: Colors.blueAccent,
                           ),
                         ),
@@ -82,15 +91,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 12,
                     ),
                     TextField(
+                      obscureText: _passwordVisible2,
                       controller: confirmNewPasswordController,
                       onChanged: (string) => {},
                       decoration: InputDecoration(
                         labelText: 'Confirm New Password',
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
+                        isDense: true,
+                        filled: true,
+                        fillColor: Theme.of(context).cardColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
                             color: Colors.blueAccent,
                           ),
                         ),
@@ -143,21 +157,25 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     : Container(
                         margin: const EdgeInsets.only(
                             bottom: 30, left: 30, right: 30),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder()),
-                          onPressed: () {
-                            final String newPassword =
-                                newPasswordController.text;
-                            final String confirmNewPassword =
-                                confirmNewPasswordController.text;
-                            ref
-                                .read(resetPasswordScreenControllerProvider
-                                    .notifier)
-                                .resetPassword(widget.requestId ?? "",
-                                    newPassword, confirmNewPassword);
-                          },
-                          child: const Text('Change Password'),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4))),
+                            onPressed: () {
+                              final String newPassword =
+                                  newPasswordController.text;
+                              final String confirmNewPassword =
+                                  confirmNewPasswordController.text;
+                              ref
+                                  .read(resetPasswordScreenControllerProvider
+                                      .notifier)
+                                  .resetPassword(widget.requestId ?? "",
+                                      newPassword, confirmNewPassword);
+                            },
+                            child: const Text('Reset Password'),
+                          ),
                         ),
                       );
               }),

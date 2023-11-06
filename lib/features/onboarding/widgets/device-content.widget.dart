@@ -17,7 +17,17 @@ class DeviceContent extends StatelessWidget {
       const Text('Device Feature',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
       const SizedBox(height: 12),
-      const Placeholder(fallbackHeight: 120),
+      SizedBox(
+        height: 200,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(child: Image.asset('assets/images/onboarding/a1.png')),
+            Expanded(child: Image.asset('assets/images/onboarding/a2.png')),
+          ],
+        ),
+      ),
       const SizedBox(height: 12),
       RichText(
           textAlign: TextAlign.center,
@@ -25,8 +35,6 @@ class DeviceContent extends StatelessWidget {
               style: TextStyle(color: Colors.black),
               text:
                   'Once you logged in, your device will automatically be registered,tracked and listed in Device List Page.')),
-      const SizedBox(height: 12),
-      const Placeholder(fallbackHeight: 120),
       const SizedBox(height: 12),
       RichText(
           textAlign: TextAlign.center,

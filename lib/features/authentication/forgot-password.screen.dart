@@ -37,68 +37,80 @@ class ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.20,
-            ),
-            const Text(
-              "Forgot Password",
-              style: TextStyle(fontSize: 32),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: emailController,
-                onChanged: (string) => {},
-                decoration: const InputDecoration(
-                  labelText: 'Email Address',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.blueAccent,
+        backgroundColor: Colors.indigo[100],
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
+        body: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: Container(
+              // height: MediaQuery.of(context).size.height * 0.6,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.20,
                     ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.blueAccent,
+                    Image.asset('assets/images/logo.png', height: 72),
+                    const Text(
+                      "Forgot Password",
+                      style: TextStyle(fontSize: 32),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      child: TextField(
+                        controller: emailController,
+                        onChanged: (string) => {},
+                        decoration: InputDecoration(
+                          labelText: 'Email Address',
+                          isDense: true,
+                          filled: true,
+                          fillColor: Theme.of(context).cardColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    state.isLoading
+                        ? const CircularProgressIndicator()
+                        : Container(
+                            margin: const EdgeInsets.only(
+                                bottom: 30, left: 30, right: 30),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4))),
+                              onPressed: () {
+                                final String email = emailController.text;
+                                confirmPasswordController.text;
+                                ref
+                                    .read(forgotPasswordScreenControllerProvider
+                                        .notifier)
+                                    .forgotPassword(email);
+                              },
+                              child: const Text('Forgot Password'),
+                            ),
+                          ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            state.isLoading
-                ? const CircularProgressIndicator()
-                : Container(
-                    margin:
-                        const EdgeInsets.only(bottom: 30, left: 30, right: 30),
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder()),
-                      onPressed: () {
-                        final String email = emailController.text;
-                        confirmPasswordController.text;
-                        ref
-                            .read(
-                                forgotPasswordScreenControllerProvider.notifier)
-                            .forgotPassword(email);
-                      },
-                      child: const Text('Forgot Password'),
-                    ),
-                  ),
-          ],
-        ),
-      ),
-    );
+            )));
   }
 }

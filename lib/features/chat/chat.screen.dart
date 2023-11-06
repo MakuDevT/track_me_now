@@ -47,7 +47,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
       Expanded(
           flex: 1,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
             child: ListView.builder(
                 controller: scrollController,
                 shrinkWrap: true,
@@ -63,7 +63,7 @@ class ChatScreenState extends ConsumerState<ChatScreen> {
                 offset: Offset(0, -0.5),
                 color: Colors.grey)
           ]),
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           child: TextField(
             textInputAction: TextInputAction.send,
             controller: textController,
