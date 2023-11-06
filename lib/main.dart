@@ -92,7 +92,7 @@ GoRouter _router(WidgetRef ref) {
 }
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const ProviderScope(child: MyApp()));

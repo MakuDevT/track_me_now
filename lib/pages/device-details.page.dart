@@ -10,6 +10,7 @@ class DeviceDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.indigo[100],
       appBar: AppBar(
           title: const Text('Device Details'),
           elevation: 2,

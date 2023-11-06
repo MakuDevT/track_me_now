@@ -22,7 +22,6 @@ class DeviceListNotifier extends StateNotifier<DeviceListNotifierState> {
           devices.indexWhere((device) => device.macAddress == macAddress);
 
       if (macAddress == null || model == null) {
-        //TODO: Add better macAddress handling
         return false;
       }
 

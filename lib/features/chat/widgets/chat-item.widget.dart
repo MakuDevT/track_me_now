@@ -41,8 +41,8 @@ class ChatItemState extends ConsumerState<ChatItem> {
         child: Card(
           color: device?.id ==
                   (widget.chatItem.deviceId ?? widget.chatItem.device?.id)
-              ? Colors.blue[100]
-              : Colors.blue[300],
+              ? Theme.of(context).cardColor
+              : Theme.of(context).cardColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: Column(
@@ -53,14 +53,27 @@ class ChatItemState extends ConsumerState<ChatItem> {
                 if (tapped)
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                        DateTimeUtil.humanizeDateTime(
-                            widget.chatItem.dateCreated),
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey[700],
-                            fontSize: 10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.schedule_rounded,
+                          size: 10,
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                            DateTimeUtil.humanizeDateTime(
+                                widget.chatItem.dateCreated),
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey[700],
+                                fontSize: 10)),
+                      ],
+                    ),
                   )
               ],
             ),

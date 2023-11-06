@@ -17,16 +17,20 @@ class ChatPage extends ConsumerWidget {
         .devices
         .firstWhere((device) => device.id == deviceId);
 
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(device.model),
-          elevation: 2,
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).primaryColor),
-      body: roomId == null || deviceId == null
-          ? const CustomErrorWidget(
-              message: 'No room ID or device ID provided.')
-          : ChatScreen(roomId: roomId!, deviceId: deviceId!),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        backgroundColor: Colors.indigo[100],
+        appBar: AppBar(
+            title: Text(device.model),
+            elevation: 2,
+            foregroundColor: Colors.white,
+            backgroundColor: Theme.of(context).primaryColor),
+        body: roomId == null || deviceId == null
+            ? const CustomErrorWidget(
+                message: 'No room ID or device ID provided.')
+            : ChatScreen(roomId: roomId!, deviceId: deviceId!),
+      ),
     );
   }
 }

@@ -17,14 +17,16 @@ class ProfileContent extends StatelessWidget {
       const Text('Profile Feature',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
       const SizedBox(height: 12),
-      const Placeholder(fallbackHeight: 120),
+      Image.asset(
+        'assets/images/onboarding/d1.png',
+        height: 200,
+      ),
       const SizedBox(height: 12),
       RichText(
           textAlign: TextAlign.center,
           text: const TextSpan(
               style: TextStyle(color: Colors.black),
-              text:
-                  'You can edit your account information and password at Profile Page.')),
+              text: 'You can change your password at Profile Page.')),
       const SizedBox(height: 12),
     ]);
   }

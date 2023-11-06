@@ -6,9 +6,9 @@
         android:label="Track Me Now"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyB8WUe83Z229hdernamqUTL-OtOfnBjrhk"/>
+           android:value="AIzaSyA9P-Rmo6ycevUgZq-FXwL5FmY_Re123VU"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

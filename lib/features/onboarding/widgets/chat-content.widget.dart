@@ -17,16 +17,17 @@ class ChatContent extends StatelessWidget {
       const Text('Chat Feature',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
       const SizedBox(height: 12),
-      const Placeholder(fallbackHeight: 120),
-      const SizedBox(height: 12),
-      const Placeholder(fallbackHeight: 120),
+      Image.asset(
+        'assets/images/onboarding/c1.png',
+        height: 200,
+      ),
       const SizedBox(height: 12),
       RichText(
           textAlign: TextAlign.center,
           text: const TextSpan(
               style: TextStyle(color: Colors.black),
               text:
-                  'You can send and receive chats you your other device by clicking Message button of your device entry in Device List Page')),
+                  'You can send and receive chats you your other device by clicking Message button of your device entry in Device List Page.')),
       const SizedBox(height: 12),
     ]);
   }

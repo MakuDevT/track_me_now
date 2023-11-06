@@ -13,10 +13,12 @@ class PaymentBlockerScreen extends ConsumerStatefulWidget {
 }
 
 class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
+  final int price = 500;
+
   @override
   Widget build(BuildContext context) {
     return Backdrop(
-      color: Colors.blueAccent.withOpacity(.9),
+      color: Colors.indigoAccent.withOpacity(.9),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(48),
@@ -69,13 +71,13 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                       "EHcK-tU0FEprCc7EnQTnTvhkcMR10m4cv4w7H5LlBKoOhGCq8L_7JxUgkjdLnZu1oJPQXwFhoVDrGyox",
                                   returnURL: "https://samplesite.com/return",
                                   cancelURL: "https://samplesite.com/cancel",
-                                  transactions: const [
+                                  transactions: [
                                     {
                                       "amount": {
-                                        "total": '100',
+                                        "total": price.toString(),
                                         "currency": "PHP",
                                         "details": {
-                                          "subtotal": '100',
+                                          "subtotal": price.toString(),
                                           "shipping": '0',
                                           "shipping_discount": 0
                                         }
@@ -87,7 +89,7 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                           {
                                             "name": "Track",
                                             "quantity": 1,
-                                            "price": '100',
+                                            "price": price.toString(),
                                             "currency": "PHP"
                                           }
                                         ],
@@ -105,13 +107,13 @@ class PaymentBlockerScreenState extends ConsumerState<PaymentBlockerScreen> {
                                                 .notifier)
                                         .paypalPayment(
                                             responseData['data']['id'],
-                                            100,
+                                            price,
                                             'success');
                                     await ref
                                         .read(
                                             authenticationScreenControllerProvider
                                                 .notifier)
-                                        .updateTrial();
+                                        .getUserInfo();
                                   },
                                   onError: (error) {
                                     ref

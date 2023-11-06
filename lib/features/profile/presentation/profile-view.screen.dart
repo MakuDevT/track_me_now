@@ -31,7 +31,9 @@ class ProfileViewScreenState extends ConsumerState<ProfileViewScreen> {
             margin: const EdgeInsets.only(bottom: 30, left: 30, right: 30),
             width: double.infinity,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder()),
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4))),
               onPressed: () {
                 ref
                     .read(authenticationScreenControllerProvider.notifier)

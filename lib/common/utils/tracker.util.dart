@@ -1,5 +1,8 @@
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:track_me_now/data/providers/device-list.provider.dart';
+import 'package:track_me_now/data/providers/session.provider.dart';
 import 'package:track_me_now/data/services/local/secure-storage.service.dart';
 import 'package:track_me_now/data/services/remote/track-api.service.dart';
 
@@ -94,5 +97,18 @@ void headlessTask(bg.HeadlessEvent headlessEvent) async {
       bool enabled = headlessEvent.event;
       print(enabled);
       break;
+  }
+}
+
+Future<void> trackOnAccountSwitch(WidgetRef ref) async {
+  if (ref.read(sessionProvider)) {
+    bg.Location location = await bg.BackgroundGeolocation.getCurrentPosition(
+      samples: 1,
+      persist: true,
+    );
+
+    await ref
+        .read(deviceListProvider.notifier)
+        .updateLocation(location.coords.latitude, location.coords.longitude);
   }
 }

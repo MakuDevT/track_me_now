@@ -74,9 +74,11 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
           "New Password not matched", StackTrace.current);
       return;
     }
-    if (currentPassword.isEmpty || confirmNewPassword.isEmpty || newPassword.isEmpty) {
-      state = AsyncValue<void>.error(
-          'Some Fields Are Empty', StackTrace.current);
+    if (currentPassword.isEmpty ||
+        confirmNewPassword.isEmpty ||
+        newPassword.isEmpty) {
+      state =
+          AsyncValue<void>.error('Some Fields Are Empty', StackTrace.current);
       return;
     }
     String? token = await storage.getToken();
@@ -86,10 +88,10 @@ class AuthenticationController extends StateNotifier<AsyncValue<void>> {
             'newPassword': newPassword,
           }, token));
 
-      if (state.asData != null) {
-        state =
-            await AsyncValue.guard<void>(() => authRepository.signOutUser());
-      }
+      // if (state.asData != null) {
+      //   state =
+      //       await AsyncValue.guard<void>(() => authRepository.signOutUser());
+      // }
     }
   }
 
@@ -199,6 +201,12 @@ final loginScreenControllerProvider =
 });
 
 final resetPasswordScreenControllerProvider =
+    StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return AuthenticationController(authRepository: authRepository);
+});
+
+final changePasswordScreenControllerProvider =
     StateNotifierProvider<AuthenticationController, AsyncValue<void>>((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthenticationController(authRepository: authRepository);
